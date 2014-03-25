@@ -6,7 +6,7 @@ dependencies:
   js: any
   shadow_dom: any
   timecard_dev_api:
-    path: ../../dart_modules/dart_timecard_dev_api_client
+    path: submodule/dart_timecard_dev_api_client
 
 dev_dependencies:
   unittest: any

@@ -1,0 +1,17 @@
+Gemfile.lock
+packages
+pubspec.lock
+submodule/dart_timecard_dev_api_client
+tags
+
+syntax: glob
+
+*.css
+*.html
+*.js
+*.sw?
+*~
+.DS_Store
+.sass-cache
+
+syntax: regexp

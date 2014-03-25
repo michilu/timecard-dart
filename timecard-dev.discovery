@@ -1,0 +1,971 @@
+{
+ "kind": "discovery#restDescription",
+ "etag": "\"FWXGb4Q2eZqWRcG8B2Ixrr-vrqQ/GC-sc1mp4cSaeDA4dbwSQzTJOe0\"",
+ "discoveryVersion": "v1",
+ "id": "timecard:dev",
+ "name": "timecard",
+ "version": "dev",
+ "description": "timecard API",
+ "icons": {
+  "x16": "http://www.google.com/images/icons/product/search-16.gif",
+  "x32": "http://www.google.com/images/icons/product/search-32.gif"
+ },
+ "protocol": "rest",
+ "baseUrl": "https://timecard-gae.appspot.com/_ah/api/timecard/dev/",
+ "basePath": "/_ah/api/timecard/dev/",
+ "rootUrl": "https://timecard-gae.appspot.com/_ah/api/",
+ "servicePath": "timecard/dev/",
+ "batchPath": "batch",
+ "parameters": {
+  "alt": {
+   "type": "string",
+   "description": "Data format for the response.",
+   "default": "json",
+   "enum": [
+    "json"
+   ],
+   "enumDescriptions": [
+    "Responses with Content-Type of application/json"
+   ],
+   "location": "query"
+  },
+  "fields": {
+   "type": "string",
+   "description": "Selector specifying which fields to include in a partial response.",
+   "location": "query"
+  },
+  "key": {
+   "type": "string",
+   "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+   "location": "query"
+  },
+  "oauth_token": {
+   "type": "string",
+   "description": "OAuth 2.0 token for the current user.",
+   "location": "query"
+  },
+  "prettyPrint": {
+   "type": "boolean",
+   "description": "Returns response with indentations and line breaks.",
+   "default": "true",
+   "location": "query"
+  },
+  "quotaUser": {
+   "type": "string",
+   "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.",
+   "location": "query"
+  },
+  "userIp": {
+   "type": "string",
+   "description": "IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
+   "location": "query"
+  }
+ },
+ "auth": {
+  "oauth2": {
+   "scopes": {
+    "https://www.googleapis.com/auth/userinfo.email": {
+     "description": "View your email address"
+    }
+   }
+  }
+ },
+ "schemas": {
+  "MainApiV1MessageCommentRequest": {
+   "id": "MainApiV1MessageCommentRequest",
+   "type": "object",
+   "properties": {
+    "body": {
+     "type": "string"
+    },
+    "issue": {
+     "type": "string"
+    }
+   }
+  },
+  "MainApiV1MessageCommentRequestList": {
+   "id": "MainApiV1MessageCommentRequestList",
+   "type": "object",
+   "properties": {
+    "issue": {
+     "type": "string"
+    },
+    "pagination": {
+     "type": "string"
+    },
+    "project": {
+     "type": "string",
+     "format": "int64"
+    }
+   }
+  },
+  "MainApiV1MessageCommentRequestUpdate": {
+   "id": "MainApiV1MessageCommentRequestUpdate",
+   "type": "object",
+   "properties": {
+    "body": {
+     "type": "string"
+    },
+    "key": {
+     "type": "string"
+    }
+   }
+  },
+  "MainApiV1MessageCommentResponse": {
+   "id": "MainApiV1MessageCommentResponse",
+   "type": "object",
+   "properties": {
+    "author": {
+     "type": "string"
+    },
+    "author_name": {
+     "type": "string"
+    },
+    "body": {
+     "type": "string"
+    },
+    "issue": {
+     "type": "string"
+    },
+    "key": {
+     "type": "string"
+    },
+    "project": {
+     "type": "string",
+     "format": "int64"
+    },
+    "time_at": {
+     "type": "string",
+     "format": "date-time"
+    },
+    "update_at": {
+     "type": "string",
+     "format": "date-time"
+    }
+   }
+  },
+  "MainApiV1MessageCommentResponseCollection": {
+   "id": "MainApiV1MessageCommentResponseCollection",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "MainApiV1MessageCommentResponse"
+     }
+    },
+    "pagination": {
+     "type": "string"
+    }
+   }
+  },
+  "MainApiV1MessageIssueRequest": {
+   "id": "MainApiV1MessageIssueRequest",
+   "type": "object",
+   "properties": {
+    "assignee": {
+     "type": "string"
+    },
+    "description": {
+     "type": "string"
+    },
+    "key": {
+     "type": "string"
+    },
+    "subject": {
+     "type": "string"
+    }
+   }
+  },
+  "MainApiV1MessageIssueRequestList": {
+   "id": "MainApiV1MessageIssueRequestList",
+   "type": "object",
+   "properties": {
+    "pagination": {
+     "type": "string"
+    },
+    "project": {
+     "type": "string",
+     "format": "int64"
+    }
+   }
+  },
+  "MainApiV1MessageIssueRequestNew": {
+   "id": "MainApiV1MessageIssueRequestNew",
+   "type": "object",
+   "properties": {
+    "assignee": {
+     "type": "string"
+    },
+    "description": {
+     "type": "string"
+    },
+    "project": {
+     "type": "string",
+     "format": "int64"
+    },
+    "subject": {
+     "type": "string"
+    }
+   }
+  },
+  "MainApiV1MessageIssueRequestSearch": {
+   "id": "MainApiV1MessageIssueRequestSearch",
+   "type": "object",
+   "properties": {
+    "pagination": {
+     "type": "string"
+    },
+    "project": {
+     "type": "string",
+     "format": "int64"
+    },
+    "query": {
+     "type": "string"
+    }
+   }
+  },
+  "MainApiV1MessageIssueRequestToggle": {
+   "id": "MainApiV1MessageIssueRequestToggle",
+   "type": "object",
+   "properties": {
+    "key": {
+     "type": "string"
+    }
+   }
+  },
+  "MainApiV1MessageIssueResponse": {
+   "id": "MainApiV1MessageIssueResponse",
+   "type": "object",
+   "properties": {
+    "assignee": {
+     "type": "string"
+    },
+    "author": {
+     "type": "string"
+    },
+    "closed_on": {
+     "type": "string",
+     "format": "date-time"
+    },
+    "description": {
+     "type": "string"
+    },
+    "key": {
+     "type": "string"
+    },
+    "project": {
+     "type": "string",
+     "format": "int64"
+    },
+    "subject": {
+     "type": "string"
+    },
+    "will_start_at": {
+     "type": "string",
+     "format": "date-time"
+    }
+   }
+  },
+  "MainApiV1MessageIssueResponseCollection": {
+   "id": "MainApiV1MessageIssueResponseCollection",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "MainApiV1MessageIssueResponse"
+     }
+    },
+    "pagination": {
+     "type": "string"
+    }
+   }
+  },
+  "MainApiV1MessageProjectRequest": {
+   "id": "MainApiV1MessageProjectRequest",
+   "type": "object",
+   "properties": {
+    "admin": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "closed": {
+     "type": "boolean"
+    },
+    "description": {
+     "type": "string"
+    },
+    "is_public": {
+     "type": "boolean"
+    },
+    "key": {
+     "type": "string",
+     "format": "int64"
+    },
+    "language": {
+     "type": "string"
+    },
+    "member": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "name": {
+     "type": "string"
+    }
+   }
+  },
+  "MainApiV1MessageProjectRequestDelete": {
+   "id": "MainApiV1MessageProjectRequestDelete",
+   "type": "object",
+   "properties": {
+    "key": {
+     "type": "string",
+     "format": "int64"
+    },
+    "name": {
+     "type": "string"
+    }
+   }
+  },
+  "MainApiV1MessageProjectRequestList": {
+   "id": "MainApiV1MessageProjectRequestList",
+   "type": "object",
+   "properties": {
+    "pagination": {
+     "type": "string"
+    }
+   }
+  },
+  "MainApiV1MessageProjectRequestNew": {
+   "id": "MainApiV1MessageProjectRequestNew",
+   "type": "object",
+   "properties": {
+    "description": {
+     "type": "string"
+    },
+    "is_public": {
+     "type": "boolean"
+    },
+    "name": {
+     "type": "string"
+    }
+   }
+  },
+  "MainApiV1MessageProjectRequestSearch": {
+   "id": "MainApiV1MessageProjectRequestSearch",
+   "type": "object",
+   "properties": {
+    "pagination": {
+     "type": "string"
+    },
+    "query": {
+     "type": "string"
+    }
+   }
+  },
+  "MainApiV1MessageProjectResponse": {
+   "id": "MainApiV1MessageProjectResponse",
+   "type": "object",
+   "properties": {
+    "admin": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "closed": {
+     "type": "boolean"
+    },
+    "description": {
+     "type": "string"
+    },
+    "is_public": {
+     "type": "boolean"
+    },
+    "key": {
+     "type": "string",
+     "format": "int64"
+    },
+    "language": {
+     "type": "string"
+    },
+    "member": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "name": {
+     "type": "string"
+    }
+   }
+  },
+  "MainApiV1MessageProjectResponseCollection": {
+   "id": "MainApiV1MessageProjectResponseCollection",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "MainApiV1MessageProjectResponse"
+     }
+    },
+    "pagination": {
+     "type": "string"
+    }
+   }
+  },
+  "MainApiV1MessageUserRequest": {
+   "id": "MainApiV1MessageUserRequest",
+   "type": "object",
+   "properties": {
+    "language": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    }
+   }
+  },
+  "MainApiV1MessageUserRequestDelete": {
+   "id": "MainApiV1MessageUserRequestDelete",
+   "type": "object",
+   "properties": {
+    "key": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    }
+   }
+  },
+  "MainApiV1MessageUserRequestList": {
+   "id": "MainApiV1MessageUserRequestList",
+   "type": "object",
+   "properties": {
+    "key": {
+     "type": "string"
+    }
+   }
+  },
+  "MainApiV1MessageUserRequestListCollection": {
+   "id": "MainApiV1MessageUserRequestListCollection",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "MainApiV1MessageUserRequestList"
+     }
+    }
+   }
+  },
+  "MainApiV1MessageUserRequestSearch": {
+   "id": "MainApiV1MessageUserRequestSearch",
+   "type": "object",
+   "properties": {
+    "pagination": {
+     "type": "string"
+    },
+    "query": {
+     "type": "string"
+    }
+   }
+  },
+  "MainApiV1MessageUserResponse": {
+   "id": "MainApiV1MessageUserResponse",
+   "type": "object",
+   "properties": {
+    "key": {
+     "type": "string"
+    },
+    "language": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    }
+   }
+  },
+  "MainApiV1MessageUserResponseCollection": {
+   "id": "MainApiV1MessageUserResponseCollection",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "MainApiV1MessageUserResponse"
+     }
+    },
+    "pagination": {
+     "type": "string"
+    }
+   }
+  },
+  "MainApiV1MessageWorkLoadRequestClose": {
+   "id": "MainApiV1MessageWorkLoadRequestClose",
+   "type": "object"
+  },
+  "MainApiV1MessageWorkLoadRequestList": {
+   "id": "MainApiV1MessageWorkLoadRequestList",
+   "type": "object",
+   "properties": {
+    "pagination": {
+     "type": "string"
+    },
+    "project": {
+     "type": "string",
+     "format": "int64"
+    }
+   }
+  },
+  "MainApiV1MessageWorkLoadRequestNew": {
+   "id": "MainApiV1MessageWorkLoadRequestNew",
+   "type": "object",
+   "properties": {
+    "issue": {
+     "type": "string"
+    }
+   }
+  },
+  "MainApiV1MessageWorkLoadResponse": {
+   "id": "MainApiV1MessageWorkLoadResponse",
+   "type": "object",
+   "properties": {
+    "end_at": {
+     "type": "string",
+     "format": "date-time"
+    },
+    "issue": {
+     "type": "string"
+    },
+    "issue_subject": {
+     "type": "string"
+    },
+    "project": {
+     "type": "string",
+     "format": "int64"
+    },
+    "project_name": {
+     "type": "string"
+    },
+    "start_at": {
+     "type": "string",
+     "format": "date-time"
+    },
+    "user": {
+     "type": "string"
+    },
+    "user_name": {
+     "type": "string"
+    }
+   }
+  },
+  "MainApiV1MessageWorkLoadResponseCollection": {
+   "id": "MainApiV1MessageWorkLoadResponseCollection",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "MainApiV1MessageWorkLoadResponse"
+     }
+    },
+    "pagination": {
+     "type": "string"
+    }
+   }
+  }
+ },
+ "resources": {
+  "comment": {
+   "methods": {
+    "create": {
+     "id": "timecard.comment.create",
+     "path": "comment/create",
+     "httpMethod": "POST",
+     "request": {
+      "$ref": "MainApiV1MessageCommentRequest",
+      "parameterName": "resource"
+     },
+     "response": {
+      "$ref": "MainApiV1MessageCommentResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
+    "list": {
+     "id": "timecard.comment.list",
+     "path": "comment/list",
+     "httpMethod": "POST",
+     "request": {
+      "$ref": "MainApiV1MessageCommentRequestList",
+      "parameterName": "resource"
+     },
+     "response": {
+      "$ref": "MainApiV1MessageCommentResponseCollection"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
+    "update": {
+     "id": "timecard.comment.update",
+     "path": "comment/update",
+     "httpMethod": "POST",
+     "request": {
+      "$ref": "MainApiV1MessageCommentRequestUpdate",
+      "parameterName": "resource"
+     },
+     "response": {
+      "$ref": "MainApiV1MessageCommentResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    }
+   }
+  },
+  "issue": {
+   "methods": {
+    "close": {
+     "id": "timecard.issue.close",
+     "path": "issue/close",
+     "httpMethod": "POST",
+     "request": {
+      "$ref": "MainApiV1MessageIssueRequestToggle",
+      "parameterName": "resource"
+     },
+     "response": {
+      "$ref": "MainApiV1MessageIssueResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
+    "create": {
+     "id": "timecard.issue.create",
+     "path": "issue/create",
+     "httpMethod": "POST",
+     "request": {
+      "$ref": "MainApiV1MessageIssueRequestNew",
+      "parameterName": "resource"
+     },
+     "response": {
+      "$ref": "MainApiV1MessageIssueResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
+    "list": {
+     "id": "timecard.issue.list",
+     "path": "issue/list",
+     "httpMethod": "POST",
+     "request": {
+      "$ref": "MainApiV1MessageIssueRequestList",
+      "parameterName": "resource"
+     },
+     "response": {
+      "$ref": "MainApiV1MessageIssueResponseCollection"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
+    "reopen": {
+     "id": "timecard.issue.reopen",
+     "path": "issue/reopen",
+     "httpMethod": "POST",
+     "request": {
+      "$ref": "MainApiV1MessageIssueRequestToggle",
+      "parameterName": "resource"
+     },
+     "response": {
+      "$ref": "MainApiV1MessageIssueResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
+    "search": {
+     "id": "timecard.issue.search",
+     "path": "issue/search",
+     "httpMethod": "POST",
+     "request": {
+      "$ref": "MainApiV1MessageIssueRequestSearch",
+      "parameterName": "resource"
+     },
+     "response": {
+      "$ref": "MainApiV1MessageIssueResponseCollection"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
+    "update": {
+     "id": "timecard.issue.update",
+     "path": "issue/update",
+     "httpMethod": "POST",
+     "request": {
+      "$ref": "MainApiV1MessageIssueRequest",
+      "parameterName": "resource"
+     },
+     "response": {
+      "$ref": "MainApiV1MessageIssueResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    }
+   }
+  },
+  "me": {
+   "methods": {
+    "create": {
+     "id": "timecard.me.create",
+     "path": "me/create",
+     "httpMethod": "POST",
+     "request": {
+      "$ref": "MainApiV1MessageUserRequest",
+      "parameterName": "resource"
+     },
+     "response": {
+      "$ref": "MainApiV1MessageUserResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
+    "delete": {
+     "id": "timecard.me.delete",
+     "path": "me/delete",
+     "httpMethod": "POST",
+     "request": {
+      "$ref": "MainApiV1MessageUserRequestDelete",
+      "parameterName": "resource"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
+    "get": {
+     "id": "timecard.me.get",
+     "path": "me/get",
+     "httpMethod": "POST",
+     "response": {
+      "$ref": "MainApiV1MessageUserResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
+    "patch": {
+     "id": "timecard.me.patch",
+     "path": "me/update",
+     "httpMethod": "PATCH",
+     "request": {
+      "$ref": "MainApiV1MessageUserRequest"
+     },
+     "response": {
+      "$ref": "MainApiV1MessageUserResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
+    "update": {
+     "id": "timecard.me.update",
+     "path": "me/update",
+     "httpMethod": "POST",
+     "request": {
+      "$ref": "MainApiV1MessageUserRequest",
+      "parameterName": "resource"
+     },
+     "response": {
+      "$ref": "MainApiV1MessageUserResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    }
+   }
+  },
+  "project": {
+   "methods": {
+    "create": {
+     "id": "timecard.project.create",
+     "path": "project/create",
+     "httpMethod": "POST",
+     "request": {
+      "$ref": "MainApiV1MessageProjectRequestNew",
+      "parameterName": "resource"
+     },
+     "response": {
+      "$ref": "MainApiV1MessageProjectResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
+    "delete": {
+     "id": "timecard.project.delete",
+     "path": "project/delete",
+     "httpMethod": "POST",
+     "request": {
+      "$ref": "MainApiV1MessageProjectRequestDelete",
+      "parameterName": "resource"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
+    "list": {
+     "id": "timecard.project.list",
+     "path": "project/list",
+     "httpMethod": "POST",
+     "request": {
+      "$ref": "MainApiV1MessageProjectRequestList",
+      "parameterName": "resource"
+     },
+     "response": {
+      "$ref": "MainApiV1MessageProjectResponseCollection"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
+    "search": {
+     "id": "timecard.project.search",
+     "path": "project/search",
+     "httpMethod": "POST",
+     "request": {
+      "$ref": "MainApiV1MessageProjectRequestSearch",
+      "parameterName": "resource"
+     },
+     "response": {
+      "$ref": "MainApiV1MessageProjectResponseCollection"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
+    "update": {
+     "id": "timecard.project.update",
+     "path": "project/update",
+     "httpMethod": "POST",
+     "request": {
+      "$ref": "MainApiV1MessageProjectRequest",
+      "parameterName": "resource"
+     },
+     "response": {
+      "$ref": "MainApiV1MessageProjectResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    }
+   }
+  },
+  "user": {
+   "methods": {
+    "list": {
+     "id": "timecard.user.list",
+     "path": "user/list",
+     "httpMethod": "POST",
+     "request": {
+      "$ref": "MainApiV1MessageUserRequestListCollection",
+      "parameterName": "resource"
+     },
+     "response": {
+      "$ref": "MainApiV1MessageUserResponseCollection"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
+    "search": {
+     "id": "timecard.user.search",
+     "path": "user/search",
+     "httpMethod": "POST",
+     "request": {
+      "$ref": "MainApiV1MessageUserRequestSearch",
+      "parameterName": "resource"
+     },
+     "response": {
+      "$ref": "MainApiV1MessageUserResponseCollection"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    }
+   }
+  },
+  "workload": {
+   "methods": {
+    "create": {
+     "id": "timecard.workload.create",
+     "path": "workload/create",
+     "httpMethod": "POST",
+     "request": {
+      "$ref": "MainApiV1MessageWorkLoadRequestNew",
+      "parameterName": "resource"
+     },
+     "response": {
+      "$ref": "MainApiV1MessageWorkLoadResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
+    "finish": {
+     "id": "timecard.workload.finish",
+     "path": "workload/finish",
+     "httpMethod": "POST",
+     "request": {
+      "$ref": "MainApiV1MessageWorkLoadRequestClose",
+      "parameterName": "resource"
+     },
+     "response": {
+      "$ref": "MainApiV1MessageWorkLoadResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
+    "get": {
+     "id": "timecard.workload.get",
+     "path": "workload/get",
+     "httpMethod": "POST",
+     "response": {
+      "$ref": "MainApiV1MessageWorkLoadResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
+    "list": {
+     "id": "timecard.workload.list",
+     "path": "workload/list",
+     "httpMethod": "POST",
+     "request": {
+      "$ref": "MainApiV1MessageWorkLoadRequestList",
+      "parameterName": "resource"
+     },
+     "response": {
+      "$ref": "MainApiV1MessageWorkLoadResponseCollection"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    }
+   }
+  }
+ }
+}
