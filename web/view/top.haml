@@ -1,0 +1,19 @@
+.col-lg-12.col-md-12
+  .welcome.text-center
+    .jumbotron(style="background-color:#fff;")
+      %h1 Timecard
+      %p.lead
+        Time tracking for your project.
+      .row(style="height:74px; padding:20px 0;")
+        %div(ng-cloak ng-show="!a.logged_in()")
+          .col-md-3.col-md-offset-2
+            %a.btn.btn-primary.btn-block(ng-click="a.login()") Sign in with Google
+          .col-md-3
+            %a.btn.btn-default.btn-block.disabled(href="") Sign in with Github
+          .col-md-3
+            %a.btn.btn-default.btn-block.disabled(href="") Sign in with Ruffnote
+    %section
+      %h2(style="color:#555555; font-weight:normal;")
+        It is possible to time tracking in connection with the Github Issue.
+      %h2(style="color:#555555; font-weight:normal;")
+        Project owner can see at a glance the working hours of project members.

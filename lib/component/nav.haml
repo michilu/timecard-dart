@@ -1,0 +1,37 @@
+%nav.navbar.navbar-default{:role => "navigation"}
+  .container
+    .navbar-header
+      %button.navbar-toggle{"data-target" => ".navbar-ex1-collapse", "data-toggle" => "collapse", :type => "button"}
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      %a.navbar-brand(href="#") Timecard
+
+    .collapse.navbar-collapse.navbar-ex1-collapse
+      %ul.nav.navbar-nav(ng-cloak)
+        %li
+          %a
+            %span.text-muted Projects
+        %li(ng-if="c.a.logged_in()")
+          %a
+            %span.text-muted Me
+      %ul.nav.navbar-nav.navbar-right(ng-cloak)
+        %li(ng-show="c.a.loading()")
+          %a(style="width:200px;  color:#fff;")
+            .progress.progress-striped.active(style="margin-bottom:0; background-color:#5E9CD2;")
+              .progress-bar(role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%")
+                %span.sr-only 45% Complete
+            %div(style="margin-top:-20px; text-align:center;")
+              Processing...
+        %li(ng-if="c.a.logged_in()")
+          %a(href="#/settings") Account settings
+        %li(ng-if="c.a.logged_in()")
+          %a(ng-click="c.a.logout()" href="") Logout
+        -#{% for value, key in language_list %}
+        -#{% if value != LANGUAGE %}
+        -#%li
+        -#  %a(href="?l={{ value }}") {{ key }}
+        -#{% endif %}
+        -#{% endfor %}
+        %li(ng-if="!c.a.logged_in()")
+          %a(ng-click="c.a.login()" href="") Sign up / Login

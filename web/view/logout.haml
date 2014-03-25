@@ -1,0 +1,19 @@
+.col-lg-12.col-md-12
+  .alert.alert-info
+    You have successfully logged out from Timecard.
+    %span.text-muted (Google OAuth2 token is revoked)
+    %strong.text-danger
+      But you are still login to your Google account.
+    %a.alert-link(href="https://accounts.google.com/Logout?&continue=")
+      %span.glyphicon.glyphicon-log-out
+      Logout from Google account
+  .welcome.text-center
+    .jumbotron(style="background-color:#fff;")
+      %h1 Timecard
+      %p.lead
+        Time tracking for your project.
+    %section
+      %h2(style="color:#555555; font-weight:normal;")
+        It is possible to time tracking in connection with the Github Issue.
+      %h2(style="color:#555555; font-weight:normal;")
+        Project owner can see at a glance the working hours of project members.
