@@ -25,11 +25,11 @@ MINCSS = $(SASS:.sass=.min.css)
 
 resource: $(HTML) $(CSS) $(MINCSS)
 
-pubserve: submodule/timecard_dev_api resource
+pubserve: submodule/dart_timecard_dev_api_client resource
 	pub serve --port 8081 --no-dart2js --force-poll
 	@#pub serve --port 8081 --minify --force-poll
 
-submodule/timecard_dev_api:
+submodule/dart_timecard_dev_api_client:
 	cd submodule/discovery_api_dart_client_generator; pub install
 	submodule/discovery_api_dart_client_generator/bin/generate.dart --no-prefix -i timecard-dev.discovery -o submodule
 
