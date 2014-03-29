@@ -2,7 +2,7 @@ library timecard_routing;
 
 import 'package:angular/angular.dart';
 
-timecardRouteInitializer(Router router, ViewFactory views) =>
+void timecardRouteInitializer(Router router, ViewFactory views) =>
     views.configure({
       "signup": ngRoute(
         path: "/signup",
