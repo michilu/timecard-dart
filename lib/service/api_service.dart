@@ -72,10 +72,8 @@ class APIService {
         result = true;
       }
     }
-    if (completed.length) {
-      for(Completer completer in completed) {
-        _loading_completers.remove(completer);
-      }
+    for(Completer completer in completed) {
+      _loading_completers.remove(completer);
     }
     return result;
   }
