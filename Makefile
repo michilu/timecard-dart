@@ -27,7 +27,7 @@ resource: $(HTML) $(CSS) $(MINCSS)
 
 pubserve: submodule/dart_timecard_dev_api_client resource
 	pub serve --port 8081 --no-dart2js --force-poll
-	@#pub serve --port 8081 --minify --force-poll
+	@#pub serve --port 8081 --force-poll
 
 submodule/dart_timecard_dev_api_client:
 	cd submodule/discovery_api_dart_client_generator; pub install
