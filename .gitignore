@@ -1,3 +1,5 @@
+.DS_Store
+.sass-cache
 Gemfile.lock
 packages
 pubspec.lock
@@ -11,7 +13,5 @@ syntax: glob
 *.js
 *.sw?
 *~
-.DS_Store
-.sass-cache
 
 syntax: regexp
