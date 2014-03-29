@@ -44,7 +44,7 @@ class Model {
   }
 }
 
-class APIService {
+abstract class APIService {
 
   List<Completer> _loading_completers = new List();
   Model model;
