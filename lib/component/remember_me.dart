@@ -2,6 +2,8 @@ library remember_me;
 
 import "dart:convert";
 import "dart:html";
+import "dart:js";
+
 import "package:angular/angular.dart";
 
 class localStorage {
@@ -43,17 +45,34 @@ class RememberMe {
   }
 
   RememberMe() {
-    window.onBeforeUnload.listen((e) {
-      switch (window.location.hash) {
-        case "#/logout":
-        case "#/leave":
-          break;
-        default:
-          if (save_this_browser != true) {
-            return _message;
-          }
+    RegExp dartString = new RegExp(r"\(dart\)");
+    // workaround for https://code.google.com/p/dart/issues/detail?id=16215
+    if (dartString.hasMatch(window.navigator.userAgent.toLowerCase())) {
+      window.onBeforeUnload.listen((e) {
+        switch (window.location.hash) {
+          case "#/logout":
+          case "#/leave":
+            break;
+          default:
+            if (save_this_browser != true) {
+              e.returnValue = _message;
+              return true;
+            }
+        };
+      });
+    } else {
+      context["onbeforeunload"] = (e) {
+        switch (window.location.hash) {
+          case "#/logout":
+          case "#/leave":
+            break;
+          default:
+            if (save_this_browser != true) {
+              return _message;
+            }
+        };
       };
-    });
+    }
   }
 }
 
