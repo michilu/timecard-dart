@@ -16,9 +16,17 @@ class EditUserComponent {
   @NgTwoWay("me")
   var me;
 
-  Completer completer;
+  Completer _completer;
+
+  bool get isCompleted {
+    if (_completer == null) {
+      return true;
+    } else {
+      return _completer.isCompleted;
+    }
+  }
 
   void me_update() {
-    completer = a.me_update();
+    _completer = a.me_update();
   }
 }

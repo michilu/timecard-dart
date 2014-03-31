@@ -15,5 +15,5 @@
   -#    {% endfor %}
   %div
     %button.btn.btn-primary(ng-hide="c.a.model.edited('me')" disabled) Update
-    %button.btn.btn-primary(ng-show="c.a.model.edited('me') && c.completer.isCompleted != false" ng-click="c.me_update()") Update
-    %button.btn.btn-primary(ng-show="c.a.model.edited('me') && c.completer.isCompleted == false" disabled) Processing...
+    %button.btn.btn-primary(ng-show="c.a.model.edited('me') && c.isCompleted != false" ng-click="c.me_update()") Update
+    %button.btn.btn-primary(ng-show="c.a.model.edited('me') && c.isCompleted == false" disabled) Processing...
