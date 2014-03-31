@@ -27,7 +27,6 @@ resource: $(HTML) $(CSS) $(MINCSS)
 
 pubserve: submodule/dart_timecard_dev_api_client resource
 	pub serve --port 8081 --no-dart2js --force-poll
-	@#pub serve --port 8081 --force-poll
 
 submodule/dart_timecard_dev_api_client:
 	cd submodule/discovery_api_dart_client_generator; pub install
@@ -47,4 +46,13 @@ $(VERSION_HTML):
 		echo $(VERSION) > $@ ;\
 	fi;
 
-.PHONY: all clean test resource $(VERSION_HTML)
+release: submodule/dart_timecard_dev_api_client resource
+	pub build
+
+build: submodule/dart_timecard_dev_api_client resource
+	pub build --mode=debug
+
+buildserve: build
+	cd build/web; python -m SimpleHTTPServer 8081
+
+.PHONY: all clean test resource build $(VERSION_HTML)
