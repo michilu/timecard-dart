@@ -2,6 +2,8 @@ VERSION_HTML=$(TEMPLATE_DIR_PATH)/version.html
 VERSION=$(shell git describe --always --dirty=+)
 RESOURCE_DIR_PATH=web lib
 RESOURCE_DIR = $(foreach dir,$(shell find $(RESOURCE_DIR_PATH) -type d),$(dir))
+RESOURCE_DIR_FOR_BUILD = web web/view web/packages/timecard_client/component
+RESOURCE_SUFFIX_FOR_BUILD = html css
 
 all: pubserve
 
@@ -23,14 +25,32 @@ SASS = $(foreach dir,$(RESOURCE_DIR),$(wildcard $(dir)/*.sass))
 CSS = $(SASS:.sass=.css)
 MINCSS = $(SASS:.sass=.min.css)
 
-resource: $(HTML) $(CSS) $(MINCSS)
+RESOURCE = $(HTML) $(CSS) $(MINCSS)
+RESOURCE_FOR_BUILD = $(foreach suffix,$(RESOURCE_SUFFIX_FOR_BUILD),$(foreach dir,$(RESOURCE_DIR_FOR_BUILD),$(wildcard $(dir)/*.$(suffix))))
+BUILD_RESOURCE = $(addprefix build/,$(RESOURCE_FOR_BUILD))
+build/%: %
+	@mkdir -p $(dir $@)
+	cp $< $@
 
-pubserve: submodule/dart_timecard_dev_api_client resource
-	pub serve --port 8081 --no-dart2js --force-poll
+DART = $(foreach dir,$(RESOURCE_DIR),$(wildcard $(dir)/*.dart))
+DART_JS = build/web/main.dart.js
+$(DART_JS): $(DART)
+	pub build --mode=debug
 
 submodule/dart_timecard_dev_api_client:
 	cd submodule/discovery_api_dart_client_generator; pub install
 	submodule/discovery_api_dart_client_generator/bin/generate.dart --no-prefix -i timecard-dev.discovery -o submodule
+
+pubserve: submodule/dart_timecard_dev_api_client $(RESOURCE)
+	pub serve --port 8081 --no-dart2js --force-poll
+
+build: submodule/dart_timecard_dev_api_client $(BUILD_RESOURCE) $(DART_JS)
+
+buildserve: build
+	cd build/web; python -m SimpleHTTPServer 8081
+
+release: submodule/dart_timecard_dev_api_client $(RESOURCE)
+	pub build
 
 clean:
 	find . -type d -name .sass-cache |xargs rm -rf
@@ -46,13 +66,4 @@ $(VERSION_HTML):
 		echo $(VERSION) > $@ ;\
 	fi;
 
-release: submodule/dart_timecard_dev_api_client resource
-	pub build
-
-build: submodule/dart_timecard_dev_api_client resource
-	pub build --mode=debug
-
-buildserve: build
-	cd build/web; python -m SimpleHTTPServer 8081
-
-.PHONY: all clean test resource build $(VERSION_HTML)
+.PHONY: all clean test build $(VERSION_HTML)
