@@ -1,4 +1,4 @@
-VERSION_HTML=$(TEMPLATE_DIR_PATH)/version.html
+VERSION_HTML=lib/component/version.html
 VERSION=$(shell git describe --always --dirty=+)
 RESOURCE_DIR_PATH=web lib
 RESOURCE_DIR = $(foreach dir,$(shell find $(RESOURCE_DIR_PATH) -type d),$(dir))

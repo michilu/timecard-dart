@@ -11,6 +11,7 @@ import "package:timecard_client/service/google_cloud_endpoints_api_service.dart"
 import "package:timecard_client/routing/timecard_router.dart";
 import "package:timecard_client/component/nav.dart";
 import "package:timecard_client/component/footer.dart";
+import "package:timecard_client/component/version.dart";
 import "package:timecard_client/component/edit_user.dart";
 import "package:timecard_client/component/remember_me.dart";
 
@@ -37,6 +38,7 @@ class MyAppModule extends Module {
     type(Controller);
     type(NavComponent);
     type(FooterComponent);
+    type(VersionComponent);
     type(EditUserComponent);
     type(RememberMe);
     type(RememberMeComponent);
