@@ -2,6 +2,7 @@ name: timecard_client
 version: 0.0.1
 dependencies:
   angular: any
+  angular_ui: any
   browser: any
   js: any
   shadow_dom: any

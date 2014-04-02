@@ -2,6 +2,9 @@ library timecard;
 
 import "package:angular/angular.dart";
 import "package:angular/routing/module.dart";
+import "package:angular_ui/angular_ui.dart";
+import "package:angular_ui/modal/modal.dart";
+import "package:angular_ui/utils/timeout.dart";
 import "package:di/di.dart";
 import "package:logging/logging.dart";
 
@@ -12,6 +15,7 @@ import "package:timecard_client/routing/timecard_router.dart";
 import "package:timecard_client/component/nav.dart";
 import "package:timecard_client/component/footer.dart";
 import "package:timecard_client/component/version.dart";
+import "package:timecard_client/component/feedback.dart";
 import "package:timecard_client/component/edit_user.dart";
 import "package:timecard_client/component/remember_me.dart";
 
@@ -39,6 +43,11 @@ class MyAppModule extends Module {
     type(NavComponent);
     type(FooterComponent);
     type(VersionComponent);
+    value(FeedbackFormConfig, new FeedbackFormConfig()
+      ..feedback_formkey = "dFBYVXYzOUg2VzhZQ2ZoVFExZzVyVlE6MA");
+    type(FeedbackComponent);
+    type(Modal);
+    type(Timeout);
     type(EditUserComponent);
     type(RememberMe);
     type(RememberMeComponent);
