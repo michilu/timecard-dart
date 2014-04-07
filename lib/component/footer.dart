@@ -13,12 +13,12 @@ import 'package:intl/intl.dart';
   publishAs: "c"
 )
 class FooterComponent {
-  final year = new DateFormat("y").format(new DateTime.now());
 
-  final versionUri = "/packages/timecard_client/component/version";
   Future _loaded;
-  String version;
   Http _http;
+  String version;
+  final versionUri = "/packages/timecard_client/component/version";
+  final year = new DateFormat("y").format(new DateTime.now());
 
   FooterComponent(this._http) {
     var load = _get_version();
