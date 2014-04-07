@@ -16,6 +16,8 @@ class FeedbackFormConfig {
   publishAs: "c"
 )
 class FeedbackComponent {
+  @NgTwoWay("p")
+  var p;
 
   FeedbackFormConfig _config;
   Http _http;
@@ -23,6 +25,7 @@ class FeedbackComponent {
   ModalInstance modalInstance;
   Scope scope;
   String description;
+  String get version => p.version;
 
   String get action_url {
     return "https://docs.google.com/spreadsheet/formResponse?formkey=${_config.feedback_formkey}";
@@ -48,7 +51,7 @@ class FeedbackComponent {
   void submit(event) {
     var queryParameters = {
       "entry.0.single": description,
-      "entry.1.single": "",
+      "entry.1.single": version,
       "entry.2.single": window.location.href
     };
     String data = new Uri.http(""/*authority*/, ""/*unencodedPath*/, queryParameters).query;
