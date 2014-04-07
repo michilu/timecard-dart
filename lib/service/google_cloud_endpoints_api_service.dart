@@ -100,15 +100,17 @@ class GoogleCloudEndpointService extends APIService {
   }
 
   bool autoLogin() {
+    bool result;
     switch (window.location.hash) {
       case "#/logout":
       case "#/leave":
-        return false;
+        result = false;
         break;
       default:
-        return true;
+        result = true;
         break;
     };
+    return result;
   }
 
   MainApiV1MessageUserRequest new_user(data) => new MainApiV1MessageUserRequest.fromJson(data);
