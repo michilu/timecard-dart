@@ -21,7 +21,7 @@ class Controller {
   RememberMe _remember_me;
   dynamic get model => _api.model;
 
-  Controller(APIService this._api, RememberMe this._remember_me);
+  Controller(this._api, this._remember_me);
 
   bool loading() {
     return _api.loading();

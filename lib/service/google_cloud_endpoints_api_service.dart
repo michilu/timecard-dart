@@ -20,7 +20,7 @@ class GoogleCloudEndpointModel extends Model {
     _resource["me"] = value.toJson();
   }
 
-  GoogleCloudEndpointModel(GoogleCloudEndpointService this._api) {
+  GoogleCloudEndpointModel(this._api) {
     inner_model = new Map();
     inner_resource = new Map();
     var load = _get_me();
@@ -75,6 +75,7 @@ class GoogleCloudEndpointService extends APIService {
   final _REVOKE_URL = "https://accounts.google.com/o/oauth2/revoke?token=";
   final _SCOPES = ["https://www.googleapis.com/auth/userinfo.email"];
 
+  GoogleCloudEndpointServiceConfig c;
   Http _http;
   Timecard _endpoint;
 
@@ -85,7 +86,7 @@ class GoogleCloudEndpointService extends APIService {
   dynamic get user      => _endpoint.user    ;
   dynamic get workload  => _endpoint.workload;
 
-  GoogleCloudEndpointService(GoogleCloudEndpointServiceConfig c, Http this._http) {
+  GoogleCloudEndpointService(this.c, this._http) {
     GoogleOAuth2 auth = new GoogleOAuth2(c.client_id, _SCOPES, autoLogin:autoLogin());
     _endpoint = new Timecard(auth);
     _endpoint.rootUrl = c.root_url;
