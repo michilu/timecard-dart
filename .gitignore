@@ -2,6 +2,7 @@
 .sass-cache
 Gemfile.lock
 build
+lib/component/version
 packages
 pubspec.lock
 submodule/dart_timecard_dev_api_client
