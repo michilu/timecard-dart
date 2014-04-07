@@ -95,3 +95,10 @@ class RememberMeComponent {
 
   RememberMeComponent(RememberMe this._remember_me);
 }
+
+class RememberMeModule extends Module {
+  RememberMeModule() {
+    type(RememberMe);
+    type(RememberMeComponent);
+  }
+}

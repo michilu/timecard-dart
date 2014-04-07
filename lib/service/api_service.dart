@@ -3,6 +3,7 @@ library api_service;
 import "dart:async";
 import "dart:html";
 
+
 class Model {
   Map<String, dynamic> inner_model;
   Map<String, dynamic> inner_resource;

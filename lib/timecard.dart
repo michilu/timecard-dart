@@ -4,12 +4,14 @@ import "dart:async";
 import "dart:html";
 
 import "package:angular/angular.dart";
-import "package:google_oauth2_client/google_oauth2_browser.dart";
-import "package:timecard_dev_api/timecard_dev_api_browser.dart";
-import "package:timecard_dev_api/timecard_dev_api_client.dart";
-import 'package:intl/intl.dart';
+import "package:angular/routing/module.dart";
 
+import "package:timecard_client/component/edit_user.dart";
+import "package:timecard_client/component/feedback.dart";
+import "package:timecard_client/component/footer.dart";
+import "package:timecard_client/component/nav.dart";
 import "package:timecard_client/component/remember_me.dart";
+import "package:timecard_client/routing/timecard_router.dart";
 import "package:timecard_client/service/api_service.dart";
 
 @NgController(
@@ -83,5 +85,21 @@ class Controller {
       completer.complete();
     });
     return completer;
+  }
+}
+
+class TimecardModule extends Module {
+  TimecardModule() {
+
+    install(new EditUserModule());
+    install(new FeedbackModule());
+    install(new FooterModule());
+    install(new NavModule());
+    install(new RememberMeModule());
+
+    type(Controller);
+    value(RouteInitializerFn, timecardRouteInitializer);
+    factory(NgRoutingUsePushState,
+        (_) => new NgRoutingUsePushState.value(false));
   }
 }

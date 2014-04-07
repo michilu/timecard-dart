@@ -3,7 +3,7 @@ library feedback;
 import "dart:html";
 
 import "package:angular/angular.dart";
-import 'package:angular_ui/modal/modal.dart';
+import "package:angular_ui/modal/modal.dart";
 
 class FeedbackFormConfig {
   String feedback_formkey;
@@ -63,14 +63,9 @@ class FeedbackComponent {
   }
 }
 
-@NgDirective(
-    selector: "[feedback-form-background]"
-)
-class FeedbackFormBackground implements NgAttachAware{
-  Element element;
-
-  FeedbackFormBackground(this.element);
-
-  attach() {
+class FeedbackModule extends Module {
+  FeedbackModule() {
+    install(new ModalModule());
+    type(FeedbackComponent);
   }
 }

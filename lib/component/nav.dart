@@ -12,3 +12,9 @@ class NavComponent {
   @NgTwoWay("a")
   var a;
 }
+
+class NavModule extends Module {
+  NavModule() {
+    type(NavComponent);
+  }
+}

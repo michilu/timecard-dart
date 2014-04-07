@@ -128,3 +128,12 @@ class GoogleCloudEndpointService extends APIService {
     });
   }
 }
+
+class GoogleCloudEndpointModule extends Module {
+  GoogleCloudEndpointModule() {
+    type(GoogleCloudEndpointService);
+    factory(APIService, (Injector inj){
+      return inj.get(GoogleCloudEndpointService);
+    });
+  }
+}

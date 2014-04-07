@@ -34,3 +34,9 @@ class FooterComponent {
   }
 
 }
+
+class FooterModule extends Module {
+  FooterModule() {
+    type(FooterComponent);
+  }
+}

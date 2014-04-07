@@ -30,3 +30,9 @@ class EditUserComponent {
     _completer = a.me_update();
   }
 }
+
+class EditUserModule extends Module {
+  EditUserModule() {
+    type(EditUserComponent);
+  }
+}
