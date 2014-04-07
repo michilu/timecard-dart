@@ -3,6 +3,10 @@ library api_service;
 import "dart:async";
 import "dart:html";
 
+@MirrorsUsed(
+  targets: const ["api_service"],
+  override: "*")
+import "dart:mirrors";
 
 class Model {
   Map<String, dynamic> inner_model;

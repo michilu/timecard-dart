@@ -6,6 +6,11 @@ import "dart:js";
 
 import "package:angular/angular.dart";
 
+@MirrorsUsed(
+  targets: const ["remember_me"],
+  override: "*")
+import "dart:mirrors";
+
 class localStorage {
   Storage _localStorage = window.localStorage;
 

@@ -4,6 +4,11 @@ import "dart:async";
 
 import "package:angular/angular.dart";
 
+@MirrorsUsed(
+  targets: const ["edit_user"],
+  override: "*")
+import "dart:mirrors";
+
 @NgComponent(
   selector: "edit_user-component",
   templateUrl: "packages/timecard_client/component/edit_user.html",

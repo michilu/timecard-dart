@@ -11,12 +11,7 @@ import "package:timecard_client/timecard.dart";
 
 // Temporary, please follow https://github.com/angular/angular.dart/issues/476
 @MirrorsUsed(
-  targets: const ["api_service",
-                  "timecard_dev_api",
-                  "google_cloud_endpoints_api_service",
-                  "remember_me",
-                  "edit_user",
-                  "timecard", "timecard_routing"],
+  targets: const ["timecard", "timecard_dev_api"],
   override: "*")
 import "dart:mirrors";
 
