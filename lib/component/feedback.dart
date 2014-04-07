@@ -49,12 +49,11 @@ class FeedbackComponent {
   }
 
   void submit(event) {
-    var queryParameters = {
+    String data = new Uri.http(""/*authority*/, ""/*unencodedPath*/, {/*queryParameters*/
       "entry.0.single": description,
       "entry.1.single": version,
       "entry.2.single": window.location.href
-    };
-    String data = new Uri.http(""/*authority*/, ""/*unencodedPath*/, queryParameters).query;
+    }).query;
     _http.post(action_url, data, headers: {
       "content-type": "application/x-www-form-urlencoded; charset=UTF-8"
     }).then((_response) {
