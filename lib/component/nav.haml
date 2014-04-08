@@ -12,7 +12,7 @@
         %li
           %a
             %span.text-muted Projects
-        %li(ng-if="c.a.logged_in()")
+        %li(ng-show="c.a.logged_in()")
           %a
             %span.text-muted Me
       %ul.nav.navbar-nav.navbar-right(ng-cloak)
@@ -23,9 +23,9 @@
                 %span.sr-only Processing...
             %div(style="margin-top:-20px; text-align:center;")
               Processing...
-        %li(ng-if="c.a.logged_in()")
+        %li(ng-show="c.a.logged_in()")
           %a(href="#/settings") Account settings
-        %li(ng-if="c.a.logged_in()")
+        %li(ng-show="c.a.logged_in()")
           %a(ng-click="c.a.logout()" href="") Logout
         -#{% for value, key in language_list %}
         -#{% if value != LANGUAGE %}
@@ -33,5 +33,5 @@
         -#  %a(href="?l={{ value }}") {{ key }}
         -#{% endif %}
         -#{% endfor %}
-        %li(ng-if="!c.a.logged_in()")
+        %li(ng-show="!c.a.logged_in()")
           %a(ng-click="c.a.login()" href="") Sign up / Login
