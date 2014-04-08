@@ -6,7 +6,7 @@ import "package:angular/angular.dart";
 import "package:angular_ui/modal/modal.dart";
 
 class FeedbackFormConfig {
-  String feedback_formkey;
+  String formkey;
 }
 
 @NgComponent(
@@ -28,7 +28,7 @@ class FeedbackComponent {
   String get version => p.version;
 
   String get action_url {
-    return "https://docs.google.com/spreadsheet/formResponse?formkey=${_config.feedback_formkey}";
+    return "https://docs.google.com/spreadsheet/formResponse?formkey=${_config.formkey}";
   }
 
   FeedbackComponent(this._config, this._http, this.modal, this.scope);

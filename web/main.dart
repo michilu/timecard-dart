@@ -21,7 +21,7 @@ class MyAppModule extends Module {
       ..client_id = "636938638718.apps.googleusercontent.com"
       ..root_url = "http://localhost:8080/");
     value(FeedbackFormConfig, new FeedbackFormConfig()
-      ..feedback_formkey = "dFBYVXYzOUg2VzhZQ2ZoVFExZzVyVlE6MA");
+      ..formkey = "dFBYVXYzOUg2VzhZQ2ZoVFExZzVyVlE6MA");
 
     install(new TimecardModule());
   }
