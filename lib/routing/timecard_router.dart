@@ -1,6 +1,7 @@
 library timecard_routing;
 
-import 'package:angular/angular.dart';
+import "package:angular/angular.dart";
+import "package:angular/routing/module.dart";
 
 @MirrorsUsed(
   targets: const ["timecard_routing"],

@@ -1,7 +1,6 @@
 library timecard;
 
 import "package:angular/angular.dart";
-import "package:angular/routing/module.dart";
 import "package:di/di.dart";
 import "package:logging/logging.dart";
 
