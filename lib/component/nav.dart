@@ -11,6 +11,8 @@ import "package:angular/angular.dart";
 class NavComponent {
   @NgTwoWay("a")
   var a;
+
+  bool menu = false;
 }
 
 class NavModule extends Module {

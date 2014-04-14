@@ -1,37 +1,99 @@
-%nav.navbar.navbar-default{:role => "navigation"}
-  .container
+:css
+  @media(max-width:767px){
+    #nav-header {
+      display: none;
+    }
+  }
+%nav.navbar-default.navbar-fixed-top{:role => "navigation"}
+  #nav-header.container
     .navbar-header
-      %button.navbar-toggle{"data-target" => ".navbar-ex1-collapse", "data-toggle" => "collapse", :type => "button"}
-        %span.icon-bar
-        %span.icon-bar
-        %span.icon-bar
       %a.navbar-brand(href="#") Timecard
+    %form.navbar-form.navbar-left(role="search")
+      .form-group
+        %input.form-control(type="text" placeholder="Search Timecard")
+      %button.btn.btn-primary(type="submit")
+        %span.glyphicon.glyphicon-search
 
-    .collapse.navbar-collapse.navbar-ex1-collapse
-      %ul.nav.navbar-nav(ng-cloak)
-        %li
-          %a
-            %span.text-muted Projects
-        %li(ng-show="c.a.logged_in()")
-          %a
-            %span.text-muted Me
-      %ul.nav.navbar-nav.navbar-right(ng-cloak)
-        %li(ng-show="c.a.loading()")
-          %a(style="width:200px;  color:#fff;")
-            .progress.progress-striped.active(style="margin-bottom:0; background-color:#5E9CD2;")
-              .progress-bar(role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%")
-                %span.sr-only Processing...
-            %div(style="margin-top:-20px; text-align:center;")
-              Processing...
-        %li(ng-show="c.a.logged_in()")
-          %a(href="#/settings") Account settings
-        %li(ng-show="c.a.logged_in()")
-          %a(ng-click="c.a.logout()" href="") Logout
-        -#{% for value, key in language_list %}
-        -#{% if value != LANGUAGE %}
-        -#%li
-        -#  %a(href="?l={{ value }}") {{ key }}
-        -#{% endif %}
-        -#{% endfor %}
-        %li(ng-show="!c.a.logged_in()")
-          %a(ng-click="c.a.login()" href="") Sign up / Login
+  .container-fluid
+    %ul.nav(ng-cloak)
+      %li.pull-left
+        %a(ng-click="c.menu=true")
+          %span.glyphicon.glyphicon-align-justify
+          &nbsp;
+          dummy
+      %li.pull-right(ng-cloak ng-show="c.a.loading()")
+        %a(style="width:200px;  color:#fff;")
+          .progress.progress-striped.active(style="margin-bottom:0; background-color:#5E9CD2;")
+            .progress-bar(role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%")
+              %span.sr-only Processing...
+          %div(style="margin-top:-20px; text-align:center;")
+            Processing...
+      -#{% for value, key in language_list %}
+      -#{% if value != LANGUAGE %}
+      -#%li
+      -#  %a(href="?l={{ value }}") {{ key }}
+      -#{% endif %}
+      -#{% endfor %}
+      %li.pull-right(ng-show="!c.a.logged_in()")
+        %a(ng-click="c.a.login()" href="") Sign up / Login
+      %li.pull-right
+        %a &nbsp;
+
+:css
+  #menu {
+    position: fixed;
+    left: -290px;
+    transition: left 0.3s linear 0;
+    z-index: 1050;
+    top: 50px;
+    width: 250px;
+    height: 100%;
+    min-height: 100%;
+    box-shadow: 0 0 40px rgba(0,0,0,0.2);
+  }
+  @media(max-width:767px){
+    #menu {
+      top: 0;
+    }
+  }
+  #menu.open {
+    left: 0;
+  }
+#menu.navbar-default(role="navigation" ng-click="c.menu=false" ng-class="{open:c.menu}")
+  .container-fluid
+    %ul.nav.nav-stacked
+      %li
+        %a
+          %span.glyphicon.glyphicon-time
+          &nbsp;
+          %span.text-muted Workload
+      %li
+        %a
+          %span.glyphicon.glyphicon-dashboard
+          &nbsp;
+          %span.text-muted Dashbord
+      %li
+        %a
+          %span.glyphicon.glyphicon-tower
+          &nbsp;
+          %span.text-muted Projects
+      %li
+        %a
+          %span.glyphicon.glyphicon-list-alt
+          &nbsp;
+          %span.text-muted Issues
+      %li(ng-show="c.a.logged_in()")
+        %a(href="#/settings")
+          %span.glyphicon.glyphicon-user
+          &nbsp;
+          Account
+      %li(ng-show="c.a.logged_in()")
+        %a(ng-click="c.a.logout()" href="")
+          %span.glyphicon.glyphicon-log-out
+          &nbsp;
+          Logout
+      %li(ng-show="c.a.logged_in()")
+        %a
+          %span.glyphicon.glyphicon-cog
+          &nbsp;
+          %span.text-muted Settings
