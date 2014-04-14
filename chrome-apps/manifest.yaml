@@ -1,0 +1,17 @@
+manifest_version: 2
+name: Timecard
+version: "2"
+minimum_chrome_version: "23"
+#icons:
+#  128: images/dart_icon.png
+app:
+  background:
+    scripts:
+    - js/main.js
+sandbox:
+  pages:
+  - timecard.html
+permissions:
+- storage
+#- http://*/*
+#- https://*/*

@@ -4,10 +4,13 @@ dependencies:
   angular: any
   angular_ui: any
   browser: any
+  chrome: any
   js: any
   shadow_dom: any
   timecard_dev_api:
     path: submodule/dart_timecard_dev_api_client
+transformers:
+- chrome
 
 dev_dependencies:
   unittest: any

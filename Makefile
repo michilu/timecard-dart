@@ -23,6 +23,12 @@ SASS = $(foreach dir,$(RESOURCE_DIR),$(wildcard $(dir)/*.sass))
 CSS = $(SASS:.sass=.css)
 MINCSS = $(SASS:.sass=.min.css)
 
+YAML = $(shell find chrome-apps -type f -name "[^.]*.yaml")
+JSON = $(YAML:.yaml=.json)
+.SUFFIXES: .yaml .json
+.yaml.json:
+	cat $< |python -c "import json,yaml,sys; print(json.dumps(yaml.load(sys.stdin.read()), indent=2))" > $@
+
 RESOURCE = $(HTML) $(CSS) $(MINCSS)
 all: submodule/dart_timecard_dev_api_client $(RESOURCE) $(VERSION_HTML)
 
@@ -49,8 +55,58 @@ build: submodule/dart_timecard_dev_api_client $(BUILD_RESOURCE) $(DART_JS)
 buildserve: build
 	cd build/web; python -m SimpleHTTPServer 8081
 
-release: submodule/dart_timecard_dev_api_client $(RESOURCE)
+RELEASE_DIR=build/chrome-apps
+$(RELEASE_DIR):
+	mkdir -p $(RELEASE_DIR)
+
+$(RELEASE_DIR)/manifest.json: chrome-apps/manifest.json
+	cp $< $@
+$(RELEASE_DIR)/js/browser_dart_csp_safe.js: chrome-apps/js/browser_dart_csp_safe.js
+	mkdir -p $(dir $@)
+	cp $< $@
+$(RELEASE_DIR)/js/main.js: chrome-apps/js/main.js
+	mkdir -p $(dir $@)
+	cp $< $@
+$(RELEASE_DIR)/timecard.html: build/web/timecard.html
+	mkdir -p $(dir $@)
+	cp $< $@
+$(RELEASE_DIR)/packages/shadow_dom/shadow_dom.min.js: build/web/packages/shadow_dom/shadow_dom.debug.js
+	mkdir -p $(dir $@)
+	cp $< $@
+$(RELEASE_DIR)/main.dart: build/web/main.dart
+	mkdir -p $(dir $@)
+	cp $< $@
+$(RELEASE_DIR)/packages/browser/dart.js: build/web/packages/browser/dart.js
+	mkdir -p $(dir $@)
+	cp $< $@
+$(RELEASE_DIR)/main.dart.js: build/web/main.dart.js
+	mkdir -p $(dir $@)
+	cp $< $@
+$(RELEASE_DIR)/main.dart.precompiled.js: build/web/main.dart.precompiled.js
+	mkdir -p $(dir $@)
+	cp $< $@
+$(RELEASE_DIR)/packages/timecard_client/component/nav.html: build/web/packages/timecard_client/component/nav.html
+	mkdir -p $(dir $@)
+	cp $< $@
+$(RELEASE_DIR)/packages/timecard_client/component/footer.html: build/web/packages/timecard_client/component/footer.html
+	mkdir -p $(dir $@)
+	cp $< $@
+$(RELEASE_DIR)/packages/timecard_client/component/version: build/web/packages/timecard_client/component/version
+	mkdir -p $(dir $@)
+	cp $< $@
+$(RELEASE_DIR)/view/top.html: build/web/view/top.html
+	mkdir -p $(dir $@)
+	cp $< $@
+$(RELEASE_DIR)/packages/timecard_client/component/feedback_link.html: build/web/packages/timecard_client/component/feedback_link.html
+	mkdir -p $(dir $@)
+	cp $< $@
+
+RELEASE_RESOURCE = $(addprefix $(RELEASE_DIR)/,manifest.json js/browser_dart_csp_safe.js js/main.js timecard.html packages/shadow_dom/shadow_dom.min.js main.dart packages/browser/dart.js main.dart.js main.dart.precompiled.js packages/timecard_client/component/nav.html packages/timecard_client/component/footer.html packages/timecard_client/component/version view/top.html packages/timecard_client/component/feedback_link.html)
+
+release_build:
 	pub build
+
+release: submodule/dart_timecard_dev_api_client $(RESOURCE) $(RELEASE_DIR) $(RELEASE_RESOURCE)
 
 clean:
 	find . -type d -name .sass-cache |xargs rm -rf
@@ -66,4 +122,4 @@ $(VERSION_HTML):
 		echo $(VERSION) > $@ ;\
 	fi;
 
-.PHONY: all clean test build $(VERSION_HTML)
+.PHONY: all clean test build release_build $(VERSION_HTML)

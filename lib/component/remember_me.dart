@@ -5,6 +5,7 @@ import "dart:html";
 import "dart:js";
 
 import "package:angular/angular.dart";
+import "package:chrome/chrome_app.dart" as chrome;
 
 @MirrorsUsed(
   targets: const ["remember_me"],
@@ -12,7 +13,7 @@ import "package:angular/angular.dart";
 import "dart:mirrors";
 
 class localStorage {
-  Storage _localStorage = window.localStorage;
+  Storage _localStorage = chrome.storage.local;
 
   String _key(dynamic key) {
     if (key is! String) {
