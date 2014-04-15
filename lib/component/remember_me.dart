@@ -13,7 +13,16 @@ import "package:chrome/chrome_app.dart" as chrome;
 import "dart:mirrors";
 
 class localStorage {
-  Storage _localStorage = chrome.storage.local;
+  Storage _localStorage;
+
+  localStorage() {
+    // for debug on Dartium
+    try {
+      _localStorage = chrome.storage.local;
+    } on NoSuchMethodError catch (e) {
+      _localStorage = window.localStorage;
+    }
+  }
 
   String _key(dynamic key) {
     if (key is! String) {
