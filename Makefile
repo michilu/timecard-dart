@@ -2,8 +2,8 @@ VERSION_HTML=lib/component/version
 VERSION=$(shell git describe --always --dirty=+)
 RESOURCE_DIR_PATH=web lib
 RESOURCE_DIR = $(foreach dir,$(shell find $(RESOURCE_DIR_PATH) -type d),$(dir))
-RESOURCE_DIR_FOR_BUILD = web web/view web/packages/timecard_client/component
-RESOURCE_SUFFIX_FOR_BUILD = html css
+RESOURCE_DIR_FOR_BUILD = web web/view web/packages/timecard_client/component web/js
+RESOURCE_SUFFIX_FOR_BUILD = html css json js
 
 
 .SUFFIXES: .haml .html
@@ -23,13 +23,13 @@ SASS = $(foreach dir,$(RESOURCE_DIR),$(wildcard $(dir)/*.sass))
 CSS = $(SASS:.sass=.css)
 MINCSS = $(SASS:.sass=.min.css)
 
-YAML = $(shell find chrome-apps -type f -name "[^.]*.yaml")
+YAML = $(shell find web -type f -name "[^.]*.yaml")
 JSON = $(YAML:.yaml=.json)
 .SUFFIXES: .yaml .json
 .yaml.json:
 	cat $< |python -c "import json,yaml,sys; print(json.dumps(yaml.load(sys.stdin.read()), indent=2))" > $@
 
-RESOURCE = $(HTML) $(CSS) $(MINCSS)
+RESOURCE = $(HTML) $(CSS) $(MINCSS) $(JSON)
 all: submodule/dart_timecard_dev_api_client $(RESOURCE) $(VERSION_HTML)
 
 RESOURCE_FOR_BUILD = $(foreach suffix,$(RESOURCE_SUFFIX_FOR_BUILD),$(foreach dir,$(RESOURCE_DIR_FOR_BUILD),$(wildcard $(dir)/*.$(suffix))))
@@ -59,15 +59,15 @@ RELEASE_DIR=build/chrome-apps
 $(RELEASE_DIR):
 	mkdir -p $(RELEASE_DIR)
 
-$(RELEASE_DIR)/manifest.json: chrome-apps/manifest.json
+$(RELEASE_DIR)/manifest.json: build/web/manifest.json
 	cp $< $@
-$(RELEASE_DIR)/js/browser_dart_csp_safe.js: chrome-apps/js/browser_dart_csp_safe.js
+$(RELEASE_DIR)/js/browser_dart_csp_safe.js: build/web/js/browser_dart_csp_safe.js
 	mkdir -p $(dir $@)
 	cp $< $@
-$(RELEASE_DIR)/js/main.js: chrome-apps/js/main.js
+$(RELEASE_DIR)/js/main.js: build/web/js/main.js
 	mkdir -p $(dir $@)
 	cp $< $@
-$(RELEASE_DIR)/index.html: build/web/timecard.html
+$(RELEASE_DIR)/index.html: build/web/index.html
 	mkdir -p $(dir $@)
 	cp $< $@
 $(RELEASE_DIR)/packages/shadow_dom/shadow_dom.min.js: build/web/packages/shadow_dom/shadow_dom.debug.js

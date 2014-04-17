@@ -12,5 +12,6 @@ sandbox:
   pages:
   - timecard.html
 permissions:
+- identity
 - storage
 - "*://*/*"

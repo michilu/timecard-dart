@@ -3,11 +3,11 @@
 Gemfile.lock
 build
 lib/component/version
-chrome-apps/manifest.json
 packages
 pubspec.lock
 submodule/dart_timecard_dev_api_client
 tags
+web/manifest.json
 
 syntax: glob
 
