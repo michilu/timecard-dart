@@ -5,6 +5,6 @@
  * @see http://developer.chrome.com/apps/app.window.html
  */
 chrome.app.runtime.onLaunched.addListener(function() {
-  chrome.app.window.create('timecard.html',
+  chrome.app.window.create('index.html',
     {id: 'timecard', bounds: {width: 800, height: 550}});
 });

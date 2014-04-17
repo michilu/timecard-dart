@@ -76,6 +76,7 @@ class RememberMe {
         };
       });
     } else {
+      // fail if running on Chrome Packaged Apps
       context["onbeforeunload"] = (e) {
         switch (window.location.hash) {
           case "#/logout":

@@ -1,7 +1,7 @@
 name: timecard_client
 version: 0.0.1
 dependencies:
-  angular: any
+  angular: 0.9.10
   angular_ui: any
   browser: any
   chrome: any
@@ -9,8 +9,5 @@ dependencies:
   shadow_dom: any
   timecard_dev_api:
     path: submodule/dart_timecard_dev_api_client
-transformers:
-- chrome
-
 dev_dependencies:
   unittest: any
