@@ -1,5 +1,6 @@
 library remember_me;
 
+import "dart:async";
 import "dart:convert";
 import "dart:html";
 import "dart:js";
@@ -31,17 +32,24 @@ class localStorage {
     return key;
   }
 
-  dynamic get(dynamic key, dynamic default_value) {
-    var value = _localStorage[_key(key)];
-    if (value == null) {
-      return default_value;
-    } else {
-      return JSON.decode(value);
-    }
+  Future get(dynamic key, dynamic default_value) {
+    String normalized_key = _key(key);
+    Completer completer = new Completer();
+    _localStorage.get([normalized_key]).then((Map<String,String> values) {
+      var result;
+      var value = values[normalized_key];
+      if (value == null) {
+        result = default_value;
+      } else {
+        result = JSON.decode(value);
+      }
+      completer.complete(result);
+    });
+    return completer.future;
   }
 
   set(dynamic key, dynamic value) {
-    _localStorage[_key(key)] = JSON.encode(value);
+    _localStorage.set({_key(key): JSON.encode(value)});
   }
 }
 
@@ -52,14 +60,17 @@ class RememberMe {
   final String _message = "You are logged in. Please click the logout if you want logout from Google account.";
   localStorage _localStorage = new localStorage();
 
-  bool get save_this_browser {
-    return _localStorage.get(_key, _default);
-  }
+  bool _save_this_browser;
+  bool get save_this_browser => _save_this_browser;
   set save_this_browser(bool value) {
+    _save_this_browser = value;
     _localStorage.set(_key, value);
   }
 
   RememberMe() {
+    _localStorage.get(_key, _default).then((value) {
+      _save_this_browser = value;
+    });
     RegExp dartString = new RegExp(r"\(dart\)");
     // workaround for https://code.google.com/p/dart/issues/detail?id=16215
     if (dartString.hasMatch(window.navigator.userAgent.toLowerCase())) {
