@@ -97,10 +97,28 @@ $(RELEASE_DIR)/packages/timecard_client/component/nav.html: build/web/packages/t
 $(RELEASE_DIR)/packages/timecard_client/component/footer.html: build/web/packages/timecard_client/component/footer.html
 	mkdir -p $(dir $@)
 	cp $< $@
+$(RELEASE_DIR)/packages/timecard_client/component/edit_user.html: build/web/packages/timecard_client/component/edit_user.html
+	mkdir -p $(dir $@)
+	cp $< $@
+$(RELEASE_DIR)/packages/timecard_client/component/remember_me.html: build/web/packages/timecard_client/component/remember_me.html
+	mkdir -p $(dir $@)
+	cp $< $@
 $(RELEASE_DIR)/packages/timecard_client/component/version: build/web/packages/timecard_client/component/version
 	mkdir -p $(dir $@)
 	cp $< $@
 $(RELEASE_DIR)/view/top.html: build/web/view/top.html
+	mkdir -p $(dir $@)
+	cp $< $@
+$(RELEASE_DIR)/view/settings.html: build/web/view/settings.html
+	mkdir -p $(dir $@)
+	cp $< $@
+$(RELEASE_DIR)/view/leave.html: build/web/view/leave.html
+	mkdir -p $(dir $@)
+	cp $< $@
+$(RELEASE_DIR)/view/logout.html: build/web/view/logout.html
+	mkdir -p $(dir $@)
+	cp $< $@
+$(RELEASE_DIR)/view/signup.html: build/web/view/signup.html
 	mkdir -p $(dir $@)
 	cp $< $@
 $(RELEASE_DIR)/packages/timecard_client/component/feedback_link.html: build/web/packages/timecard_client/component/feedback_link.html
@@ -115,7 +133,7 @@ $(RELEASE_DIR)/packages/angular_ui/modal/window.html: build/web/packages/angular
 $(RELEASE_DIR)/bootstrap-3.1.1: build/web/bootstrap-3.1.1
 	cp -r $< $@
 
-RELEASE_RESOURCE = $(addprefix $(RELEASE_DIR)/,manifest.json js/browser_dart_csp_safe.js js/main.js index.html packages/shadow_dom/shadow_dom.min.js main.dart packages/browser/dart.js packages/browser/interop.js packages/chrome/bootstrap.js main.dart.js main.dart.precompiled.js packages/timecard_client/component/nav.html packages/timecard_client/component/footer.html packages/timecard_client/component/version view/top.html packages/timecard_client/component/feedback_link.html packages/timecard_client/component/feedback_form.html packages/angular_ui/modal/window.html bootstrap-3.1.1)
+RELEASE_RESOURCE = $(addprefix $(RELEASE_DIR)/,manifest.json js/browser_dart_csp_safe.js js/main.js index.html packages/shadow_dom/shadow_dom.min.js main.dart packages/browser/dart.js packages/browser/interop.js packages/chrome/bootstrap.js main.dart.js main.dart.precompiled.js packages/timecard_client/component/nav.html packages/timecard_client/component/footer.html packages/timecard_client/component/edit_user.html packages/timecard_client/component/remember_me.html packages/timecard_client/component/version view/top.html view/settings.html view/leave.html view/logout.html view/signup.html packages/timecard_client/component/feedback_link.html packages/timecard_client/component/feedback_form.html packages/angular_ui/modal/window.html bootstrap-3.1.1)
 
 release_build:
 	pub build
