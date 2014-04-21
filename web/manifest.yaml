@@ -8,9 +8,6 @@ app:
   background:
     scripts:
     - js/main.js
-sandbox:
-  pages:
-  - timecard.html
 permissions:
 - identity
 - storage
