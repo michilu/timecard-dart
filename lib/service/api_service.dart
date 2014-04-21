@@ -86,8 +86,7 @@ abstract class APIService {
   bool logged_in() {
   }
 
-  Future login() {
-  }
+  Future login() => new Future.value();
 
   void redirect(redirect_to) {
     window.location.hash = redirect_to;
