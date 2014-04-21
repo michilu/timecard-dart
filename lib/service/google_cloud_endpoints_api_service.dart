@@ -94,13 +94,15 @@ class GoogleCloudEndpointService extends APIService {
 
   GoogleCloudEndpointService(this.c, this._http) {
     chrome.identity.getAuthToken(new chrome.TokenDetails(interactive:true))
-    .then((token){
-      OAuth2 auth = new SimpleOAuth2(token);
-      _endpoint = new Timecard(auth);
-      _endpoint.rootUrl = c.root_url;
-      _endpoint.makeAuthRequests = true;
-      model = new GoogleCloudEndpointModel(this);
-    });
+    .then(_postLogin);
+  }
+
+  void _postLogin(token) {
+    OAuth2 auth = new SimpleOAuth2(token);
+    _endpoint = new Timecard(auth);
+    _endpoint.rootUrl = c.root_url;
+    _endpoint.makeAuthRequests = true;
+    model = new GoogleCloudEndpointModel(this);
   }
 
   bool autoLogin() {
