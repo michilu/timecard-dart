@@ -59,86 +59,25 @@ RELEASE_DIR=build/chrome-apps
 $(RELEASE_DIR):
 	mkdir -p $(RELEASE_DIR)
 
-$(RELEASE_DIR)/manifest.json: build/web/manifest.json
-	cp $< $@
-$(RELEASE_DIR)/js/browser_dart_csp_safe.js: build/web/js/browser_dart_csp_safe.js
-	mkdir -p $(dir $@)
-	cp $< $@
-$(RELEASE_DIR)/js/main.js: build/web/js/main.js
-	mkdir -p $(dir $@)
-	cp $< $@
-$(RELEASE_DIR)/index.html: build/web/index.html
-	mkdir -p $(dir $@)
-	cp $< $@
-$(RELEASE_DIR)/packages/shadow_dom/shadow_dom.min.js: build/web/packages/shadow_dom/shadow_dom.debug.js
-	mkdir -p $(dir $@)
-	cp $< $@
-$(RELEASE_DIR)/main.dart: build/web/main.dart
-	mkdir -p $(dir $@)
-	cp $< $@
-$(RELEASE_DIR)/packages/browser/dart.js: build/web/packages/browser/dart.js
-	mkdir -p $(dir $@)
-	cp $< $@
-$(RELEASE_DIR)/packages/browser/interop.js: build/web/packages/browser/interop.js
-	mkdir -p $(dir $@)
-	cp $< $@
-$(RELEASE_DIR)/packages/chrome/bootstrap.js: build/web/packages/chrome/bootstrap.js
-	mkdir -p $(dir $@)
-	cp $< $@
-$(RELEASE_DIR)/main.dart.js: build/web/main.dart.js
-	mkdir -p $(dir $@)
-	cp $< $@
-$(RELEASE_DIR)/main.dart.precompiled.js: build/web/main.dart.precompiled.js
-	mkdir -p $(dir $@)
-	cp $< $@
-$(RELEASE_DIR)/packages/timecard_client/component/nav.html: build/web/packages/timecard_client/component/nav.html
-	mkdir -p $(dir $@)
-	cp $< $@
-$(RELEASE_DIR)/packages/timecard_client/component/footer.html: build/web/packages/timecard_client/component/footer.html
-	mkdir -p $(dir $@)
-	cp $< $@
-$(RELEASE_DIR)/packages/timecard_client/component/edit_user.html: build/web/packages/timecard_client/component/edit_user.html
-	mkdir -p $(dir $@)
-	cp $< $@
-$(RELEASE_DIR)/packages/timecard_client/component/remember_me.html: build/web/packages/timecard_client/component/remember_me.html
-	mkdir -p $(dir $@)
-	cp $< $@
-$(RELEASE_DIR)/packages/timecard_client/component/version: build/web/packages/timecard_client/component/version
-	mkdir -p $(dir $@)
-	cp $< $@
-$(RELEASE_DIR)/view/top.html: build/web/view/top.html
-	mkdir -p $(dir $@)
-	cp $< $@
-$(RELEASE_DIR)/view/settings.html: build/web/view/settings.html
-	mkdir -p $(dir $@)
-	cp $< $@
-$(RELEASE_DIR)/view/leave.html: build/web/view/leave.html
-	mkdir -p $(dir $@)
-	cp $< $@
-$(RELEASE_DIR)/view/logout.html: build/web/view/logout.html
-	mkdir -p $(dir $@)
-	cp $< $@
-$(RELEASE_DIR)/view/signup.html: build/web/view/signup.html
-	mkdir -p $(dir $@)
-	cp $< $@
-$(RELEASE_DIR)/packages/timecard_client/component/feedback_link.html: build/web/packages/timecard_client/component/feedback_link.html
-	mkdir -p $(dir $@)
-	cp $< $@
-$(RELEASE_DIR)/packages/timecard_client/component/feedback_form.html: build/web/packages/timecard_client/component/feedback_form.html
-	mkdir -p $(dir $@)
-	cp $< $@
-$(RELEASE_DIR)/packages/angular_ui/modal/window.html: build/web/packages/angular_ui/modal/window.html
-	mkdir -p $(dir $@)
-	cp $< $@
-$(RELEASE_DIR)/bootstrap-3.1.1: build/web/bootstrap-3.1.1
+RELEASE_RESOURCE_SRC_DIR = build/web
+RELEASE_RESOURCE = manifest.json index.html packages/shadow_dom/shadow_dom.min.js main.dart packages/browser/dart.js packages/browser/interop.js packages/chrome/bootstrap.js packages/timecard_client/component/version packages/angular_ui/modal/window.html
+RELEASE_RESOURCE_WILDCARD = js/*.js main.dart*.js view/*.html packages/timecard_client/component/*.html
+RELEASE_RESOURCE_SRC_WILDCARD = $(foreach path,$(RELEASE_RESOURCE_WILDCARD),$(wildcard $(RELEASE_RESOURCE_SRC_DIR)/$(path)))
+RELEASE_RESOURCE_SRC = $(addprefix $(RELEASE_RESOURCE_SRC_DIR)/,$(RELEASE_RESOURCE)) $(RELEASE_RESOURCE_SRC_WILDCARD)
+RELEASE_RESOURCE_DST = $(foreach path,$(RELEASE_RESOURCE_SRC),$(subst $(RELEASE_RESOURCE_SRC_DIR),$(RELEASE_DIR),$(path)))
+$(RELEASE_RESOURCE_DST): $(RELEASE_RESOURCE_SRC)
+	@if [ ! -d $(dir $@) ]; then\
+		mkdir -p $(dir $@);\
+	fi;
+	cp $(subst $(RELEASE_DIR),$(RELEASE_RESOURCE_SRC_DIR),$@) $@
+RELEASE_RESOURCE_DIR = $(addprefix $(RELEASE_DIR)/,bootstrap-3.1.1)
+$(RELEASE_RESOURCE_DIR): $(addprefix $(RELEASE_RESOURCE_SRC_DIR)/,bootstrap-3.1.1)
 	cp -r $< $@
-
-RELEASE_RESOURCE = $(addprefix $(RELEASE_DIR)/,manifest.json js/browser_dart_csp_safe.js js/main.js index.html packages/shadow_dom/shadow_dom.min.js main.dart packages/browser/dart.js packages/browser/interop.js packages/chrome/bootstrap.js main.dart.js main.dart.precompiled.js packages/timecard_client/component/nav.html packages/timecard_client/component/footer.html packages/timecard_client/component/edit_user.html packages/timecard_client/component/remember_me.html packages/timecard_client/component/version view/top.html view/settings.html view/leave.html view/logout.html view/signup.html packages/timecard_client/component/feedback_link.html packages/timecard_client/component/feedback_form.html packages/angular_ui/modal/window.html bootstrap-3.1.1)
 
 release_build:
 	pub build
 
-release: submodule/dart_timecard_dev_api_client $(RESOURCE) $(RELEASE_DIR) $(RELEASE_RESOURCE)
+release: submodule/dart_timecard_dev_api_client $(RESOURCE) $(RELEASE_DIR) $(RELEASE_RESOURCE_DIR) $(RELEASE_RESOURCE_DST)
 
 clean:
 	find . -type d -name .sass-cache |xargs rm -rf
