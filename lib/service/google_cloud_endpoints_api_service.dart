@@ -122,7 +122,11 @@ class GoogleCloudEndpointService extends APIService {
   MainApiV1MessageUserRequest new_user(data) => new MainApiV1MessageUserRequest.fromJson(data);
 
   bool logged_in() {
-    return _endpoint.auth.token != null;
+    if (_endpoint == null) {
+      return false;
+    } else {
+      return _endpoint.auth.token != null;
+    }
   }
 
   void logout({String redirect_to: "/"}) {
