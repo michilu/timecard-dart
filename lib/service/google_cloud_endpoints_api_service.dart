@@ -93,14 +93,14 @@ class GoogleCloudEndpointService extends APIService {
   dynamic get workload  => _endpoint.workload;
 
   GoogleCloudEndpointService(this.c, this._http) {
-    if (chrome.identity != null) {
+    try {
       chrome.identity.getAuthToken(new chrome.TokenDetails(interactive:true))
       .then((token) {
         OAuth2 auth = new SimpleOAuth2(token);
         _postLogin(auth);
       });
     // for dartium
-    } else {
+    } on UnsupportedError catch(_) {
       GoogleOAuth2 auth = new GoogleOAuth2(c.client_id, _SCOPES, autoLogin:autoLogin());
       _postLogin(auth);
     }
