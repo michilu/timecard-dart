@@ -48,12 +48,12 @@ submodule/dart_timecard_dev_api_client:
 	submodule/discovery_api_dart_client_generator/bin/generate.dart --no-prefix -i timecard-dev.discovery -o submodule
 
 pubserve: all
-	pub serve --port 8081 --no-dart2js --force-poll
+	pub serve --port 8080 --no-dart2js --force-poll
 
 build: submodule/dart_timecard_dev_api_client $(BUILD_RESOURCE) $(DART_JS)
 
 buildserve: build
-	cd build/web; python -m SimpleHTTPServer 8081
+	cd build/web; python -m SimpleHTTPServer 8080
 
 RELEASE_DIR=build/chrome-apps
 $(RELEASE_DIR):
