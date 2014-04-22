@@ -4,6 +4,10 @@
       display: none;
     }
   }
+  nav > .container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+  }
 %nav.navbar-default.navbar-fixed-top{:role => "navigation"}
   #nav-header.container
     .navbar-header
@@ -58,6 +62,10 @@
   }
   #menu.open {
     left: 0;
+  }
+  #menu > .container-fluid {
+    padding-left: 0;
+    padding-right: 0;
   }
 #menu.navbar-default(role="navigation" ng-click="c.menu=false" ng-class="{open:c.menu}")
   .container-fluid
