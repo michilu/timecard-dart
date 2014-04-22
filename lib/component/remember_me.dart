@@ -17,10 +17,10 @@ class localStorage {
   Storage _localStorage;
 
   localStorage() {
-    // for debug on Dartium
-    try {
+    if (chrome.storage != null) {
       _localStorage = chrome.storage.local;
-    } on NoSuchMethodError catch (e) {
+    // for dartium
+    } else {
       _localStorage = window.localStorage;
     }
   }
@@ -34,22 +34,41 @@ class localStorage {
 
   Future get(dynamic key, dynamic default_value) {
     String normalized_key = _key(key);
-    Completer completer = new Completer();
-    _localStorage.get([normalized_key]).then((Map<String,String> values) {
+    if (chrome.storage != null ) {
+      Completer completer = new Completer();
+      _localStorage.get([normalized_key]).then((Map<String,String> values) {
+        var result;
+        var value = values[normalized_key];
+        if (value == null) {
+          result = default_value;
+        } else {
+          result = JSON.decode(value);
+        }
+        completer.complete(result);
+      });
+      return completer.future;
+    // for dartium
+    } else {
       var result;
-      var value = values[normalized_key];
+      var value = window.localStorage.get(normalized_key);
       if (value == null) {
         result = default_value;
       } else {
         result = JSON.decode(value);
       }
-      completer.complete(result);
-    });
-    return completer.future;
+      return new Future.value(result);
+    }
   }
 
   set(dynamic key, dynamic value) {
-    _localStorage.set({_key(key): JSON.encode(value)});
+    String normalized_key = _key(key);
+    String normalized_value = JSON.encode(value);
+    if (chrome.storage != null) {
+      _localStorage.set({normalized_key: normalized_value});
+    // for dartium
+    } else {
+      window.localStorage.set(normalized_key, normalized_value);
+    }
   }
 }
 
