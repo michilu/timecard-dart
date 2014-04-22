@@ -44,7 +44,16 @@ class GoogleCloudEndpointModel extends Model {
       me = response;
     })
     .catchError((error) {
-      window.location.hash = "/signup";
+      if (_api._endpoint.auth.token is String) {
+        var details = new chrome.InvalidTokenDetails(token:_api._endpoint.auth.token);
+        chrome.identity.removeCachedAuthToken(details)
+        .whenComplete(() {
+          window.location.hash = "/signup";
+        });
+      // for dartium
+      } else {
+        window.location.hash = "/signup";
+      }
     }, test: (e) => e is APIRequestError)
     .whenComplete(() {
       completer.complete();
@@ -94,7 +103,8 @@ class GoogleCloudEndpointService extends APIService {
 
   GoogleCloudEndpointService(this.c, this._http) {
     try {
-      chrome.identity.getAuthToken(new chrome.TokenDetails(interactive:true))
+      var details = new chrome.TokenDetails(interactive:true);
+      chrome.identity.getAuthToken(details)
       .then((token) {
         OAuth2 auth = new SimpleOAuth2(token);
         _postLogin(auth);
@@ -138,14 +148,27 @@ class GoogleCloudEndpointService extends APIService {
   }
 
   void logout({String redirect_to: "/"}) {
-    String revoke_url = _REVOKE_URL + _endpoint.auth.token.data;
+    var token = _endpoint.auth.token;
+    // for dartium
+    if (token is! String) {
+      token = token.data;
+    }
+    String revoke_url = _REVOKE_URL + token;
     var completer = loading_completer();
-    _http.get(revoke_url).then((_response) {
-      _endpoint.auth.logout();
-      redirect(redirect_to);
-    })
+    _http.get(revoke_url)
     .whenComplete(() {
       completer.complete();
+      if (_endpoint.auth.token is String) {
+        var details = new chrome.InvalidTokenDetails(token:_endpoint.auth.token);
+        chrome.identity.removeCachedAuthToken(details)
+        .whenComplete(() {
+          redirect(redirect_to);
+        });
+      // for dartium
+      } else {
+        _endpoint.auth.logout();
+        redirect(redirect_to);
+      }
     });
   }
 }
