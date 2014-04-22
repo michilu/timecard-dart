@@ -39,7 +39,7 @@ build/%: %
 	cp $< $@
 
 DART = $(foreach dir,$(RESOURCE_DIR),$(wildcard $(dir)/*.dart))
-DART_JS = build/web/main.dart.js
+DART_JS = build/web/main.dart.precompiled.js
 $(DART_JS): $(DART)
 	pub build --mode=debug
 
@@ -60,8 +60,8 @@ $(RELEASE_DIR):
 	mkdir -p $(RELEASE_DIR)
 
 RELEASE_RESOURCE_SRC_DIR = build/web
-RELEASE_RESOURCE = manifest.json index.html packages/shadow_dom/shadow_dom.min.js main.dart packages/browser/dart.js packages/browser/interop.js packages/chrome/bootstrap.js packages/timecard_client/component/version packages/angular_ui/modal/window.html
-RELEASE_RESOURCE_WILDCARD = js/*.js main.dart*.js view/*.html packages/timecard_client/component/*.html
+RELEASE_RESOURCE = manifest.json index.html main.dart.precompiled.js packages/shadow_dom/shadow_dom.min.js main.dart packages/browser/dart.js packages/browser/interop.js packages/chrome/bootstrap.js packages/timecard_client/component/version packages/angular_ui/modal/window.html
+RELEASE_RESOURCE_WILDCARD = js/*.js view/*.html packages/timecard_client/component/*.html
 RELEASE_RESOURCE_SRC_WILDCARD = $(foreach path,$(RELEASE_RESOURCE_WILDCARD),$(wildcard $(RELEASE_RESOURCE_SRC_DIR)/$(path)))
 RELEASE_RESOURCE_SRC = $(addprefix $(RELEASE_RESOURCE_SRC_DIR)/,$(RELEASE_RESOURCE)) $(RELEASE_RESOURCE_SRC_WILDCARD)
 RELEASE_RESOURCE_DST = $(foreach path,$(RELEASE_RESOURCE_SRC),$(subst $(RELEASE_RESOURCE_SRC_DIR),$(RELEASE_DIR),$(path)))
