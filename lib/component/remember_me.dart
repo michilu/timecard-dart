@@ -14,16 +14,6 @@ import "package:chrome/chrome_app.dart" as chrome;
 import "dart:mirrors";
 
 class localStorage {
-  Storage _localStorage;
-
-  localStorage() {
-    if (chrome.storage != null) {
-      _localStorage = chrome.storage.local;
-    // for dartium
-    } else {
-      _localStorage = window.localStorage;
-    }
-  }
 
   String _key(dynamic key) {
     if (key is! String) {
@@ -36,7 +26,7 @@ class localStorage {
     String normalized_key = _key(key);
     if (chrome.storage != null ) {
       Completer completer = new Completer();
-      _localStorage.get([normalized_key]).then((Map<String,String> values) {
+      chrome.storage.local.get([normalized_key]).then((Map<String,String> values) {
         var result;
         var value = values[normalized_key];
         if (value == null) {
@@ -60,11 +50,11 @@ class localStorage {
     }
   }
 
-  set(dynamic key, dynamic value) {
+  void set(dynamic key, dynamic value) {
     String normalized_key = _key(key);
     String normalized_value = JSON.encode(value);
     if (chrome.storage != null) {
-      _localStorage.set({normalized_key: normalized_value});
+      chrome.storage.local.set({normalized_key: normalized_value});
     // for dartium
     } else {
       window.localStorage.set(normalized_key, normalized_value);
