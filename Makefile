@@ -2,8 +2,8 @@ VERSION_HTML=lib/component/version
 VERSION=$(shell git describe --always --dirty=+)
 RESOURCE_DIR_PATH=web lib
 RESOURCE_DIR = $(foreach dir,$(shell find $(RESOURCE_DIR_PATH) -type d),$(dir))
-RESOURCE_DIR_FOR_BUILD = web web/view web/packages/timecard_client/component
-RESOURCE_SUFFIX_FOR_BUILD = html css
+RESOURCE_DIR_FOR_BUILD = web web/js web/view web/packages/timecard_client/component web/packages/timecard_client/routing web/packages/timecard_client/service
+RESOURCE_SUFFIX_FOR_BUILD = html css json js
 
 
 .SUFFIXES: .haml .html
@@ -23,7 +23,13 @@ SASS = $(foreach dir,$(RESOURCE_DIR),$(wildcard $(dir)/*.sass))
 CSS = $(SASS:.sass=.css)
 MINCSS = $(SASS:.sass=.min.css)
 
-RESOURCE = $(HTML) $(CSS) $(MINCSS)
+YAML = $(shell find web -type f -name "[^.]*.yaml")
+JSON = $(YAML:.yaml=.json)
+.SUFFIXES: .yaml .json
+.yaml.json:
+	cat $< |python -c "import json,yaml,sys; print(json.dumps(yaml.load(sys.stdin.read()), indent=2))" > $@
+
+RESOURCE = $(HTML) $(CSS) $(MINCSS) $(JSON)
 all: submodule/dart_timecard_dev_api_client $(RESOURCE) $(VERSION_HTML)
 
 RESOURCE_FOR_BUILD = $(foreach suffix,$(RESOURCE_SUFFIX_FOR_BUILD),$(foreach dir,$(RESOURCE_DIR_FOR_BUILD),$(wildcard $(dir)/*.$(suffix))))
@@ -42,15 +48,36 @@ submodule/dart_timecard_dev_api_client:
 	submodule/discovery_api_dart_client_generator/bin/generate.dart --no-prefix -i timecard-dev.discovery -o submodule
 
 pubserve: all
-	pub serve --port 8081 --no-dart2js --force-poll
+	pub serve --port 8080 --no-dart2js --force-poll
 
 build: submodule/dart_timecard_dev_api_client $(BUILD_RESOURCE) $(DART_JS)
 
 buildserve: build
-	cd build/web; python -m SimpleHTTPServer 8081
+	cd build/web; python -m SimpleHTTPServer 8080
 
-release: submodule/dart_timecard_dev_api_client $(RESOURCE)
+RELEASE_DIR=build/chrome-apps
+$(RELEASE_DIR):
+	mkdir -p $(RELEASE_DIR)
+
+RELEASE_RESOURCE_SRC_DIR = build/web
+RELEASE_RESOURCE = manifest.json index.html packages/shadow_dom/shadow_dom.min.js main.dart packages/browser/dart.js packages/browser/interop.js packages/chrome/bootstrap.js packages/timecard_client/component/version packages/angular_ui/modal/window.html
+RELEASE_RESOURCE_WILDCARD = js/*.js main.dart*.js view/*.html packages/timecard_client/component/*.html
+RELEASE_RESOURCE_SRC_WILDCARD = $(foreach path,$(RELEASE_RESOURCE_WILDCARD),$(wildcard $(RELEASE_RESOURCE_SRC_DIR)/$(path)))
+RELEASE_RESOURCE_SRC = $(addprefix $(RELEASE_RESOURCE_SRC_DIR)/,$(RELEASE_RESOURCE)) $(RELEASE_RESOURCE_SRC_WILDCARD)
+RELEASE_RESOURCE_DST = $(foreach path,$(RELEASE_RESOURCE_SRC),$(subst $(RELEASE_RESOURCE_SRC_DIR),$(RELEASE_DIR),$(path)))
+$(RELEASE_RESOURCE_DST): $(RELEASE_RESOURCE_SRC)
+	@if [ ! -d $(dir $@) ]; then\
+		mkdir -p $(dir $@);\
+	fi;
+	cp $(subst $(RELEASE_DIR),$(RELEASE_RESOURCE_SRC_DIR),$@) $@
+RELEASE_RESOURCE_DIR = $(addprefix $(RELEASE_DIR)/,bootstrap-3.1.1)
+$(RELEASE_RESOURCE_DIR): $(addprefix $(RELEASE_RESOURCE_SRC_DIR)/,bootstrap-3.1.1)
+	cp -r $< $@
+
+release_build:
 	pub build
+
+release: $(RESOURCE) $(RELEASE_RESOURCE_DST) build $(RELEASE_DIR) $(RELEASE_RESOURCE_DIR)
 
 clean:
 	find . -type d -name .sass-cache |xargs rm -rf
@@ -66,4 +93,4 @@ $(VERSION_HTML):
 		echo $(VERSION) > $@ ;\
 	fi;
 
-.PHONY: all clean test build $(VERSION_HTML)
+.PHONY: all clean test build release_build $(VERSION_HTML)

@@ -1,0 +1,18 @@
+manifest_version: 2
+name: Timecard
+version: "1"
+minimum_chrome_version: "23"
+#icons:
+#  128: images/dart_icon.png
+app:
+  background:
+    scripts:
+    - js/main.js
+permissions:
+- identity
+- storage
+- "*://*/*"
+oauth2:
+  client_id: 636938638718-f7fose4kkhe2imf1c38l25fsamarn8ei.apps.googleusercontent.com
+  scopes:
+  - https://www.googleapis.com/auth/userinfo.email

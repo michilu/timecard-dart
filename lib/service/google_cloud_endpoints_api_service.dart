@@ -4,6 +4,7 @@ import "dart:async";
 import "dart:html";
 
 import "package:angular/angular.dart";
+import "package:chrome/chrome_app.dart" as chrome;
 import "package:google_oauth2_client/google_oauth2_browser.dart";
 import "package:timecard_dev_api/timecard_dev_api_browser.dart";
 import "package:timecard_dev_api/timecard_dev_api_client.dart";
@@ -92,7 +93,20 @@ class GoogleCloudEndpointService extends APIService {
   dynamic get workload  => _endpoint.workload;
 
   GoogleCloudEndpointService(this.c, this._http) {
-    GoogleOAuth2 auth = new GoogleOAuth2(c.client_id, _SCOPES, autoLogin:autoLogin());
+    try {
+      chrome.identity.getAuthToken(new chrome.TokenDetails(interactive:true))
+      .then((token) {
+        OAuth2 auth = new SimpleOAuth2(token);
+        _postLogin(auth);
+      });
+    // for dartium
+    } on UnsupportedError catch(_) {
+      GoogleOAuth2 auth = new GoogleOAuth2(c.client_id, _SCOPES, autoLogin:autoLogin());
+      _postLogin(auth);
+    }
+  }
+
+  void _postLogin(auth) {
     _endpoint = new Timecard(auth);
     _endpoint.rootUrl = c.root_url;
     _endpoint.makeAuthRequests = true;
@@ -116,11 +130,11 @@ class GoogleCloudEndpointService extends APIService {
   MainApiV1MessageUserRequest new_user(data) => new MainApiV1MessageUserRequest.fromJson(data);
 
   bool logged_in() {
-    return _endpoint.auth.token != null;
-  }
-
-  Future login() {
-    return _endpoint.auth.login();
+    if (_endpoint == null) {
+      return false;
+    } else {
+      return _endpoint.auth.token != null;
+    }
   }
 
   void logout({String redirect_to: "/"}) {

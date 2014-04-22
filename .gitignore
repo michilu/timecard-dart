@@ -7,6 +7,7 @@ packages
 pubspec.lock
 submodule/dart_timecard_dev_api_client
 tags
+web/manifest.json
 
 syntax: glob
 
