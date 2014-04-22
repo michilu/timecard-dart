@@ -2,7 +2,7 @@ VERSION_HTML=lib/component/version
 VERSION=$(shell git describe --always --dirty=+)
 RESOURCE_DIR_PATH=web lib
 RESOURCE_DIR = $(foreach dir,$(shell find $(RESOURCE_DIR_PATH) -type d),$(dir))
-RESOURCE_DIR_FOR_BUILD = web web/view web/packages/timecard_client/component web/js
+RESOURCE_DIR_FOR_BUILD = web web/js web/view web/packages/timecard_client/component web/packages/timecard_client/routing web/packages/timecard_client/service
 RESOURCE_SUFFIX_FOR_BUILD = html css json js
 
 
@@ -77,7 +77,7 @@ $(RELEASE_RESOURCE_DIR): $(addprefix $(RELEASE_RESOURCE_SRC_DIR)/,bootstrap-3.1.
 release_build:
 	pub build
 
-release: submodule/dart_timecard_dev_api_client $(RESOURCE) $(RELEASE_DIR) $(RELEASE_RESOURCE_DIR) $(RELEASE_RESOURCE_DST)
+release: $(RESOURCE) $(RELEASE_RESOURCE_DST) build $(RELEASE_DIR) $(RELEASE_RESOURCE_DIR)
 
 clean:
 	find . -type d -name .sass-cache |xargs rm -rf
