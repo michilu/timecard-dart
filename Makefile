@@ -60,8 +60,8 @@ $(RELEASE_DIR):
 	mkdir -p $(RELEASE_DIR)
 
 RELEASE_RESOURCE_SRC_DIR = build/web
-RELEASE_RESOURCE = manifest.json index.html main.dart.precompiled.js packages/shadow_dom/shadow_dom.min.js main.dart packages/browser/dart.js packages/browser/interop.js packages/chrome/bootstrap.js packages/timecard_client/component/version packages/angular_ui/modal/window.html
-RELEASE_RESOURCE_WILDCARD = js/*.js view/*.html packages/timecard_client/component/*.html
+RELEASE_RESOURCE = index.html main.dart.precompiled.js packages/shadow_dom/shadow_dom.min.js main.dart packages/browser/dart.js packages/browser/interop.js packages/chrome/bootstrap.js packages/timecard_client/component/version packages/angular_ui/modal/window.html
+RELEASE_RESOURCE_WILDCARD = manifest*.json js/*.js view/*.html packages/timecard_client/component/*.html
 RELEASE_RESOURCE_SRC_WILDCARD = $(foreach path,$(RELEASE_RESOURCE_WILDCARD),$(wildcard $(RELEASE_RESOURCE_SRC_DIR)/$(path)))
 RELEASE_RESOURCE_SRC = $(addprefix $(RELEASE_RESOURCE_SRC_DIR)/,$(RELEASE_RESOURCE)) $(RELEASE_RESOURCE_SRC_WILDCARD)
 RELEASE_RESOURCE_DST = $(foreach path,$(RELEASE_RESOURCE_SRC),$(subst $(RELEASE_RESOURCE_SRC_DIR),$(RELEASE_DIR),$(path)))
@@ -77,7 +77,19 @@ $(RELEASE_RESOURCE_DIR): $(addprefix $(RELEASE_RESOURCE_SRC_DIR)/,bootstrap-3.1.
 release_build:
 	pub build
 
-release: $(RESOURCE) $(RELEASE_RESOURCE_DST) build $(RELEASE_DIR) $(RELEASE_RESOURCE_DIR)
+cordova:
+	mkdir cordova
+
+cordova/ios: cordova build/chrome-apps/manifest.json
+	cca create $@ --link-to=build/chrome-apps/manifest.json
+
+release: $(RESOURCE) $(RELEASE_RESOURCE_DST) build $(RELEASE_DIR) $(RELEASE_RESOURCE_DIR) cordova/ios
+
+ios: cordova/ios
+	cd $<; cca emulate $@
+
+xcode: cordova/ios
+	open $</platforms/ios/Timecard.xcodeproj
 
 clean:
 	find . -type d -name .sass-cache |xargs rm -rf

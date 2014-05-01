@@ -27,10 +27,21 @@ Run development server
 
 then access to:
 
-* http://localhost:8081/
+* http://localhost:8080/
+
+Build the Chrome Apps
+---------------------
+
+    $ make release
+
+Launch the Chrome Apps via iOS Simulator
+----------------------------------------
+
+    $ make ios
 
 Dependencies
 ------------
 
 * Bundler
 * GNU Make
+* Node.js v0.10+ (dependenced by cordova)
