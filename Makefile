@@ -88,6 +88,9 @@ release: $(RESOURCE) $(RELEASE_RESOURCE_DST) build $(RELEASE_DIR) $(RELEASE_RESO
 ios: cordova/ios
 	cd $<; cca emulate $@
 
+xcode: cordova/ios
+	open $</platforms/ios/Timecard.xcodeproj
+
 clean:
 	find . -type d -name .sass-cache |xargs rm -rf
 	find . -name "*.sw?" -delete
