@@ -1,0 +1,6 @@
+packageId: com.phonegaptips.googleoauth
+versionCode: 1
+CFBundleVersion: "1.1.1"
+ios:
+  oauth2:
+    client_id: 636938638718-q1shs6aa5rnflil339rhset2rs9fcq52.apps.googleusercontent.com
