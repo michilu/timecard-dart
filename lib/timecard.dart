@@ -14,16 +14,16 @@ import "package:timecard_client/component/remember_me.dart";
 import "package:timecard_client/routing/timecard_router.dart";
 import "package:timecard_client/service/api_service.dart";
 
-@NgController(
+@Controller(
     selector: "[app]",
     publishAs: "a")
-class Controller {
+class TimecardController {
 
   APIService _api;
   RememberMe _remember_me;
   dynamic get model => _api.model;
 
-  Controller(this._api, this._remember_me);
+  TimecardController(this._api, this._remember_me);
 
   bool loading() {
     return _api.loading();
@@ -97,7 +97,7 @@ class TimecardModule extends Module {
     install(new NavModule());
     install(new RememberMeModule());
 
-    type(Controller);
+    type(TimecardController);
     value(RouteInitializerFn, timecardRouteInitializer);
     factory(NgRoutingUsePushState,
         (_) => new NgRoutingUsePushState.value(false));

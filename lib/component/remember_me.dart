@@ -112,7 +112,7 @@ class RememberMe {
   }
 }
 
-@NgComponent(
+@Component(
   selector: "remember_me-component",
   templateUrl: "packages/timecard_client/component/remember_me.html",
   applyAuthorStyles: true,

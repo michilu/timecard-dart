@@ -2,7 +2,7 @@ library nav;
 
 import "package:angular/angular.dart";
 
-@NgComponent(
+@Component(
   selector: "nav-component",
   templateUrl: "packages/timecard_client/component/nav.html",
   applyAuthorStyles: true,
