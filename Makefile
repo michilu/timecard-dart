@@ -81,8 +81,10 @@ cordova:
 	mkdir cordova
 
 cordova/ios: cordova build/chrome-apps/manifest.json
-	if ! cca create $@ --link-to=build/chrome-apps/manifest.json; then\
+	if [ -z `find $@ -empty -maxdepth 0` ]; then\
 		cd $@; cca prepare;\
+	else\
+		cca create $@ --link-to=build/chrome-apps/manifest.json;\
 	fi;
 
 release: $(RESOURCE) $(RELEASE_RESOURCE_DST) build $(RELEASE_DIR) $(RELEASE_RESOURCE_DIR) cordova/ios
