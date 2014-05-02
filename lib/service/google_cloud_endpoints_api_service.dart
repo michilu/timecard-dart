@@ -11,11 +11,6 @@ import "package:timecard_dev_api/timecard_dev_api_client.dart";
 
 import "package:timecard_client/service/api_service.dart";
 
-@MirrorsUsed(
-  targets: const ["google_cloud_endpoints_api_service"],
-  override: "*")
-import "dart:mirrors";
-
 class GoogleCloudEndpointModel extends Model {
   Future _loaded;
   GoogleCloudEndpointService _api;
