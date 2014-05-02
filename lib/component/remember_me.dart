@@ -8,11 +8,6 @@ import "dart:js";
 import "package:angular/angular.dart";
 import "package:chrome/chrome_app.dart" as chrome;
 
-@MirrorsUsed(
-  targets: const ["remember_me"],
-  override: "*")
-import "dart:mirrors";
-
 class localStorage {
 
   String _key(dynamic key) {
@@ -112,7 +107,7 @@ class RememberMe {
   }
 }
 
-@NgComponent(
+@Component(
   selector: "remember_me-component",
   templateUrl: "packages/timecard_client/component/remember_me.html",
   applyAuthorStyles: true,

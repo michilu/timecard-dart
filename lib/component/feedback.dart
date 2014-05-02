@@ -9,7 +9,7 @@ class FeedbackFormConfig {
   String formkey;
 }
 
-@NgComponent(
+@Component(
   selector: "feedback-component",
   templateUrl: "packages/timecard_client/component/feedback_link.html",
   applyAuthorStyles: true,

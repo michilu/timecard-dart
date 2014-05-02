@@ -3,11 +3,6 @@ library timecard_routing;
 import "package:angular/angular.dart";
 import "package:angular/routing/module.dart";
 
-@MirrorsUsed(
-  targets: const ["timecard_routing"],
-  override: "*")
-import "dart:mirrors";
-
 void timecardRouteInitializer(Router router, ViewFactory views) =>
     views.configure({
       "signup": ngRoute(
