@@ -9,6 +9,12 @@ import "package:timecard_client/component/feedback.dart";
 import "package:timecard_client/service/google_cloud_endpoints_api_service.dart";
 import "package:timecard_client/timecard.dart";
 
+// Temporary, please follow https://github.com/angular/angular.dart/issues/476
+@MirrorsUsed(
+  targets: const ["timecard", "timecard_dev_api"],
+  override: "*")
+import "dart:mirrors";
+
 class MyAppModule extends Module {
   MyAppModule() {
     install(new GoogleCloudEndpointModule());

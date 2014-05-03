@@ -8,6 +8,11 @@ import "dart:js";
 import "package:angular/angular.dart";
 import "package:chrome/chrome_app.dart" as chrome;
 
+@MirrorsUsed(
+  targets: const ["remember_me"],
+  override: "*")
+import "dart:mirrors";
+
 class localStorage {
 
   String _key(dynamic key) {
