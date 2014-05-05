@@ -24,21 +24,9 @@ class localStorage {
 
   Future get(dynamic key, dynamic default_value) {
     String normalized_key = _key(key);
-    try {
-      Completer completer = new Completer();
-      chrome.storage.local.get([normalized_key]).then((Map<String,String> values) {
-        var result;
-        var value = values[normalized_key];
-        if (value == null) {
-          result = default_value;
-        } else {
-          result = JSON.decode(value);
-        }
-        completer.complete(result);
-      });
-      return completer.future;
-    // for dartium
-    } on NoSuchMethodError catch (_) {
+    RegExp safariString = new RegExp(r"safari");
+    // for Safari
+    if (safariString.hasMatch(window.navigator.userAgent.toLowerCase())) {
       var result;
       var value = window.localStorage[normalized_key];
       if (value == null) {
@@ -47,6 +35,32 @@ class localStorage {
         result = JSON.decode(value);
       }
       return new Future.value(result);
+    } else {
+      try {
+        // for Google Apps
+        Completer completer = new Completer();
+        chrome.storage.local.get([normalized_key]).then((Map<String,String> values) {
+          var result;
+          var value = values[normalized_key];
+          if (value == null) {
+            result = default_value;
+          } else {
+            result = JSON.decode(value);
+          }
+          completer.complete(result);
+        });
+        return completer.future;
+      // for dartium
+      } on NoSuchMethodError catch (_) {
+        var result;
+        var value = window.localStorage[normalized_key];
+        if (value == null) {
+          result = default_value;
+        } else {
+          result = JSON.decode(value);
+        }
+        return new Future.value(result);
+      }
     }
   }
 
