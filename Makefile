@@ -50,20 +50,43 @@ submodule/dart_timecard_dev_api_client:
 pubserve: all
 	pub serve --port 8080 --no-dart2js --force-poll
 
-build: submodule/dart_timecard_dev_api_client $(BUILD_RESOURCE) $(DART_JS)
+build: submodule/dart_timecard_dev_api_client $(YAML) $(BUILD_RESOURCE) $(DART_JS)
 
 buildserve: build
 	cd build/web; python -m SimpleHTTPServer 8080
 
 RELEASE_DIR=build/chrome-apps
 $(RELEASE_DIR):
-	mkdir -p $(RELEASE_DIR)
+	mkdir -p $@
 
 RELEASE_RESOURCE_SRC_DIR = build/web
-RELEASE_RESOURCE = index.html main.dart.precompiled.js packages/shadow_dom/shadow_dom.min.js main.dart packages/browser/dart.js packages/browser/interop.js packages/chrome/bootstrap.js packages/timecard_client/component/version packages/angular_ui/modal/window.html
-RELEASE_RESOURCE_WILDCARD = manifest*.json js/*.js view/*.html packages/timecard_client/component/*.html
-RELEASE_RESOURCE_SRC_WILDCARD = $(foreach path,$(RELEASE_RESOURCE_WILDCARD),$(wildcard $(RELEASE_RESOURCE_SRC_DIR)/$(path)))
-RELEASE_RESOURCE_SRC = $(addprefix $(RELEASE_RESOURCE_SRC_DIR)/,$(RELEASE_RESOURCE)) $(RELEASE_RESOURCE_SRC_WILDCARD)
+RELEASE_RESOURCE =\
+	index.html\
+	js/browser_dart_csp_safe.js\
+	js/main.js\
+	main.dart.precompiled.js\
+	main.dart\
+	manifest.json\
+	manifest.mobile.json\
+	packages/angular_ui/modal/window.html\
+	packages/browser/dart.js\
+	packages/browser/interop.js\
+	packages/chrome/bootstrap.js\
+	packages/shadow_dom/shadow_dom.min.js\
+	packages/timecard_client/component/edit_user.html\
+	packages/timecard_client/component/feedback_form.html\
+	packages/timecard_client/component/feedback_link.html\
+	packages/timecard_client/component/footer.html\
+	packages/timecard_client/component/nav.html\
+	packages/timecard_client/component/remember_me.html\
+	packages/timecard_client/component/version\
+	view/leave.html\
+	view/logout.html\
+	view/settings.html\
+	view/signup.html\
+	view/top.html\
+
+RELEASE_RESOURCE_SRC = $(addprefix $(RELEASE_RESOURCE_SRC_DIR)/,$(RELEASE_RESOURCE))
 RELEASE_RESOURCE_DST = $(foreach path,$(RELEASE_RESOURCE_SRC),$(subst $(RELEASE_RESOURCE_SRC_DIR),$(RELEASE_DIR),$(path)))
 $(RELEASE_RESOURCE_DST): $(RELEASE_RESOURCE_SRC)
 	@if [ ! -d $(dir $@) ]; then\
@@ -80,14 +103,14 @@ release_build:
 cordova:
 	mkdir cordova
 
-cordova/ios: cordova build/chrome-apps/manifest.json
-	if [ -z `find $@ -empty -maxdepth 0` ]; then\
+cordova/ios: $(RESOURCE) $(RELEASE_RESOURCE_DST) build $(RELEASE_DIR) $(RELEASE_RESOURCE_DIR) cordova
+	if [ -d $@ ]; then\
 		cd $@; cca prepare;\
 	else\
 		cca create $@ --link-to=build/chrome-apps/manifest.json;\
 	fi;
 
-release: $(RESOURCE) $(RELEASE_RESOURCE_DST) build $(RELEASE_DIR) $(RELEASE_RESOURCE_DIR) cordova/ios
+release: cordova/ios
 
 ios: cordova/ios
 	cd $<; cca emulate $@
@@ -99,9 +122,8 @@ clean:
 	find . -type d -name .sass-cache |xargs rm -rf
 	find . -name "*.sw?" -delete
 	find . -name .DS_Store -delete
-	rm -f $(CSS)
-	rm -f $(HTML)
-	rm -f $(MINCSS)
+	rm -f $(RESOURCE)
+	rm -rf build cordova
 
 $(VERSION_HTML):
 	@if [ "$(VERSION)" != "$(strip $(shell [ -f $@ ] && cat $@))" ] ; then\
@@ -109,4 +131,4 @@ $(VERSION_HTML):
 		echo $(VERSION) > $@ ;\
 	fi;
 
-.PHONY: all clean test build release_build $(VERSION_HTML)
+.PHONY: all clean test build release_build $(VERSION_HTML) cordova/ios
