@@ -70,7 +70,6 @@ RELEASE_RESOURCE =\
 	manifest.mobile.json\
 	packages/angular_ui/modal/window.html\
 	packages/browser/dart.js\
-	packages/browser/interop.js\
 	packages/chrome/bootstrap.js\
 	packages/shadow_dom/shadow_dom.min.js\
 	packages/timecard_client/component/edit_user.html\
