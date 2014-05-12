@@ -41,6 +41,7 @@ build/%: %
 DART = $(foreach dir,$(RESOURCE_DIR),$(wildcard $(dir)/*.dart))
 DART_JS = build/web/main.dart.precompiled.js
 $(DART_JS): $(DART)
+	-patch -p1 --forward -i pubbuild.patch
 	pub build --mode=debug
 
 submodule/dart_timecard_dev_api_client:
@@ -48,6 +49,7 @@ submodule/dart_timecard_dev_api_client:
 	submodule/discovery_api_dart_client_generator/bin/generate.dart --no-prefix -i timecard-dev.discovery -o submodule
 
 pubserve: all
+	-patch -p1 --forward --reverse -i pubbuild.patch
 	pub serve --port 8080 --no-dart2js --force-poll
 
 build: submodule/dart_timecard_dev_api_client $(YAML) $(BUILD_RESOURCE) $(DART_JS)
@@ -97,6 +99,7 @@ $(RELEASE_RESOURCE_DIR): $(addprefix $(RELEASE_RESOURCE_SRC_DIR)/,bootstrap-3.1.
 	cp -r $< $@
 
 release_build:
+	-patch -p1 --forward -i pubbuild.patch
 	pub build
 
 cordova:
@@ -123,6 +126,8 @@ clean:
 	find . -name .DS_Store -delete
 	rm -f $(RESOURCE)
 	rm -rf build cordova
+	-patch -p1 --forward --reverse -i pubbuild.patch
+	rm -f pubspec.yaml.rej
 
 $(VERSION_HTML):
 	@if [ "$(VERSION)" != "$(strip $(shell [ -f $@ ] && cat $@))" ] ; then\

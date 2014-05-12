@@ -6,6 +6,7 @@ cordova
 lib/component/version
 packages
 pubspec.lock
+pubspec.yaml.rej
 submodule/dart_timecard_dev_api_client
 tags
 
