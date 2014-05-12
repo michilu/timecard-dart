@@ -24,9 +24,9 @@ class localStorage {
 
   Future get(dynamic key, dynamic default_value) {
     String normalized_key = _key(key);
-    RegExp safariString = new RegExp(r"safari");
-    // for Safari
-    if (safariString.hasMatch(window.navigator.userAgent.toLowerCase())) {
+    RegExp AppleWebKitString = new RegExp(r"AppleWebKit");
+    // for AppleWebKit
+    if (AppleWebKitString.hasMatch(window.navigator.userAgent)) {
       var result;
       var value = window.localStorage[normalized_key];
       if (value == null) {
