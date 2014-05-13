@@ -49,23 +49,7 @@ $(VERSION_HTML):
 	fi;
 
 
-chrome-apps: $(VERSION_HTML) $(DART_JS) $(CHROME_APPS_DIR) $(RELEASE_RESOURCE_DST)
-
-BUILD_DIR=build
-DART_JS=$(BUILD_DIR)/web/main.dart.precompiled.js
-DART=$(foreach dir,$(RESOURCE_DIR),$(wildcard $(dir)/*.dart))
-$(DART_JS): $(DART)
-	-patch -p1 --forward --reverse -i pubbuild.patch
-	pub build --mode=debug
-
-CHROME_APPS_DIR=$(BUILD_DIR)/chrome-apps
-$(CHROME_APPS_DIR):
-	mkdir -p $@
-
-RELEASE_RESOURCE_DST=$(foreach path,$(RELEASE_RESOURCE_SRC),$(subst $(RELEASE_RESOURCE_SRC_DIR),$(CHROME_APPS_DIR),$(path)))
-RELEASE_RESOURCE_SRC=$(addprefix $(RELEASE_RESOURCE_SRC_DIR)/,$(RELEASE_RESOURCE))
-RELEASE_RESOURCE_SRC_DIR = $(BUILD_DIR)/web
-RELEASE_RESOURCE =\
+RELEASE_RESOURCE=\
 	index.html\
 	js/browser_dart_csp_safe.js\
 	js/main.js\
@@ -89,6 +73,26 @@ RELEASE_RESOURCE =\
 	view/settings.html\
 	view/signup.html\
 	view/top.html\
+
+BUILD_DIR=build
+DART_JS=$(BUILD_DIR)/web/main.dart.precompiled.js
+CHROME_APPS_DIR=$(BUILD_DIR)/chrome-apps
+RELEASE_RESOURCE_DIR=$(addprefix $(CHROME_APPS_DIR)/,bootstrap-3.1.1)
+RELEASE_RESOURCE_SRC_DIR=$(BUILD_DIR)/web
+RELEASE_RESOURCE_SRC=$(addprefix $(RELEASE_RESOURCE_SRC_DIR)/,$(RELEASE_RESOURCE))
+RELEASE_RESOURCE_DST=$(foreach path,$(RELEASE_RESOURCE_SRC),$(subst $(RELEASE_RESOURCE_SRC_DIR),$(CHROME_APPS_DIR),$(path)))
+chrome-apps: $(ENDPOINTS_LIB) $(RESOURCE) $(VERSION_HTML) $(DART_JS) $(CHROME_APPS_DIR) $(RELEASE_RESOURCE_DIR) $(RELEASE_RESOURCE_DST)
+
+DART=$(foreach dir,$(RESOURCE_DIR),$(wildcard $(dir)/*.dart))
+$(DART_JS): $(DART)
+	-patch -p1 --forward --reverse -i pubbuild.patch
+	pub build --mode=debug
+
+$(CHROME_APPS_DIR):
+	mkdir -p $@
+
+$(RELEASE_RESOURCE_DIR): $(addprefix $(RELEASE_RESOURCE_SRC_DIR)/,bootstrap-3.1.1)
+	cp -r $< $@
 
 $(RELEASE_RESOURCE_DST): $(RELEASE_RESOURCE_SRC)
 	@if [ ! -d $(dir $@) ]; then\
@@ -117,10 +121,6 @@ $(CORDOVA_DIR):
 $(BUILD_DIR)/%: %
 	@mkdir -p $(dir $@)
 	cp $< $@
-
-RELEASE_RESOURCE_DIR=$(addprefix $(CHROME_APPS_DIR)/,bootstrap-3.1.1)
-$(RELEASE_RESOURCE_DIR): $(addprefix $(RELEASE_RESOURCE_SRC_DIR)/,bootstrap-3.1.1)
-	cp -r $< $@
 
 
 xcode: $(CORDOVA_IOS)
