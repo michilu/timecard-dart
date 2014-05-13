@@ -16,9 +16,9 @@
 	cat $< |python -c "import json,yaml,sys; print(json.dumps(yaml.load(sys.stdin.read()), indent=2))" > $@
 
 
-CORDOVA_DIR=cordova
-CORDOVA_IOS=$(CORDOVA_DIR)/ios
-all: chrome-apps $(CORDOVA_IOS)
+RELEASE_DIR=release
+RELEASE_IOS=$(RELEASE_DIR)/ios
+all: chrome-apps $(RELEASE_IOS)
 
 
 ENDPOINTS_LIB=submodule/dart_timecard_dev_api_client
@@ -53,7 +53,6 @@ RELEASE_RESOURCE=\
 	index.html\
 	js/browser_dart_csp_safe.js\
 	js/main.js\
-	main.dart.precompiled.js\
 	main.dart\
 	manifest.json\
 	manifest.mobile.json\
@@ -74,71 +73,114 @@ RELEASE_RESOURCE=\
 	view/signup.html\
 	view/top.html\
 
+RELEASE_CHROME_APPS=$(RELEASE_DIR)/chrome-apps
+RELEASE_CHROME_APPS_RESOURCE_DIR=$(addprefix $(RELEASE_CHROME_APPS)/,bootstrap-3.1.1)
 BUILD_DIR=build
-DART_JS=$(BUILD_DIR)/web/main.dart.precompiled.js
-CHROME_APPS_DIR=$(BUILD_DIR)/chrome-apps
-RELEASE_RESOURCE_DIR=$(addprefix $(CHROME_APPS_DIR)/,bootstrap-3.1.1)
 RELEASE_RESOURCE_SRC_DIR=$(BUILD_DIR)/web
 RELEASE_RESOURCE_SRC=$(addprefix $(RELEASE_RESOURCE_SRC_DIR)/,$(RELEASE_RESOURCE))
-RELEASE_RESOURCE_DST=$(foreach path,$(RELEASE_RESOURCE_SRC),$(subst $(RELEASE_RESOURCE_SRC_DIR),$(CHROME_APPS_DIR),$(path)))
-chrome-apps: $(ENDPOINTS_LIB) $(RESOURCE) $(VERSION_HTML) $(DART_JS) $(CHROME_APPS_DIR) $(RELEASE_RESOURCE_DIR) $(RELEASE_RESOURCE_DST)
+RELEASE_CHROME_APPS_RESOURCE_DST=$(foreach path,$(RELEASE_RESOURCE_SRC),$(subst $(RELEASE_RESOURCE_SRC_DIR),$(RELEASE_CHROME_APPS),$(path)))
+CHROME_APPS_DART_JS=chrome-apps-dart-js
+chrome-apps: $(ENDPOINTS_LIB) $(RESOURCE) $(VERSION_HTML) $(RELEASE_CHROME_APPS) $(CHROME_APPS_DART_JS) $(RELEASE_CHROME_APPS_RESOURCE_DST)
+	make $(RELEASE_CHROME_APPS_RESOURCE_DIR)
+	@if [ $(DART_JS) -nt $(RELEASE_CHROME_APPS)/main.dart.precompiled.js ]; then\
+		echo "cp $(DART_JS) $(RELEASE_CHROME_APPS)/main.dart.precompiled.js";\
+		cp $(DART_JS) $(RELEASE_CHROME_APPS)/main.dart.precompiled.js;\
+	fi;
 
-DART=$(foreach dir,$(RESOURCE_DIR),$(wildcard $(dir)/*.dart))
-$(DART_JS): $(DART)
-	-patch -p1 --forward --reverse -i pubbuild.patch
-	pub build --mode=debug
-
-$(CHROME_APPS_DIR):
+$(RELEASE_CHROME_APPS): $(RELEASE_DIR)
 	mkdir -p $@
 
-$(RELEASE_RESOURCE_DIR): $(addprefix $(RELEASE_RESOURCE_SRC_DIR)/,bootstrap-3.1.1)
-	cp -r $< $@
+$(RELEASE_DIR):
+	mkdir $@
 
-$(RELEASE_RESOURCE_DST): $(RELEASE_RESOURCE_SRC)
+DART_JS=$(BUILD_DIR)/web/main.dart.precompiled.js
+$(CHROME_APPS_DART_JS):
+	-patch -p1 --forward --reverse -i pubbuild.patch
+	make $(DART_JS)
+
+$(RELEASE_CHROME_APPS_RESOURCE_DST): $(RELEASE_RESOURCE_SRC)
 	@if [ ! -d $(dir $@) ]; then\
 		mkdir -p $(dir $@);\
 	fi;
-	cp $(subst $(CHROME_APPS_DIR),$(RELEASE_RESOURCE_SRC_DIR),$@) $@
+	cp $(subst $(RELEASE_CHROME_APPS),$(RELEASE_RESOURCE_SRC_DIR),$@) $@
 
-
-ios-sim: $(CORDOVA_IOS)
-	cd $<; cca emulate $@
-
-BUILD_RESOURCE=$(addprefix $(BUILD_DIR)/,$(RESOURCE_FOR_BUILD))
-RESOURCE_FOR_BUILD=$(foreach suffix,$(RESOURCE_SUFFIX_FOR_BUILD),$(foreach dir,$(RESOURCE_DIR_FOR_BUILD),$(wildcard $(dir)/*.$(suffix))))
-RESOURCE_SUFFIX_FOR_BUILD=html css json js
-RESOURCE_DIR_FOR_BUILD=web web/js web/view web/packages/timecard_client/component web/packages/timecard_client/routing web/packages/timecard_client/service
-$(CORDOVA_IOS): $(ENDPOINTS_LIB) $(RESOURCE) $(VERSION_HTML) $(YAML) $(DART_JS) $(BUILD_RESOURCE) $(RELEASE_RESOURCE_DST) $(CHROME_APPS_DIR) $(RELEASE_RESOURCE_DIR) $(CORDOVA_DIR)
-	if [ -d $@ ]; then\
-		cd $@; cca prepare;\
+$(RELEASE_DIR)/%: %
+	@mkdir -p $(dir $@)
+	@if [ -d $< ]; then\
+		echo "cp -r $< $@";\
+		cp -r $< $@;\
 	else\
-		cca create $@ --link-to=$(CHROME_APPS_DIR)/manifest.json;\
+		if [ $< -nt $@ ]; then\
+		  echo "cp $< $@";\
+		  cp $< $@;\
+		fi;\
 	fi;
 
-$(CORDOVA_DIR):
-	mkdir $@
+DART=$(foreach dir,$(RESOURCE_DIR),$(wildcard $(dir)/*.dart))
+$(DART_JS): pubspec.yaml $(DART)
+	pub build --mode=debug
 
-$(BUILD_DIR)/%: %
-	@mkdir -p $(dir $@)
-	cp $< $@
+$(RELEASE_CHROME_APPS_RESOURCE_DIR): $(addprefix $(RELEASE_RESOURCE_SRC_DIR)/,bootstrap-3.1.1)
+	cp -r $< $@
+
+$(RELEASE_RESOURCE_SRC): $(DART_JS)
 
 
-xcode: $(CORDOVA_IOS)
+ios-sim: $(RELEASE_IOS)
+	cd $<; cca emulate $@
+
+
+RELEASE_CORDOVA=$(RELEASE_DIR)/cordova
+RELEASE_CORDOVA_RESOURCE_DIR=$(addprefix $(RELEASE_CORDOVA)/,bootstrap-3.1.1)
+RELEASE_CORDOVA_RESOURCE_DST=$(foreach path,$(RELEASE_RESOURCE_SRC),$(subst $(RELEASE_RESOURCE_SRC_DIR),$(RELEASE_CORDOVA),$(path)))
+CORDOVA_DART_JS=cordova-dart-js
+$(RELEASE_IOS): $(ENDPOINTS_LIB) $(RESOURCE) $(VERSION_HTML) $(RELEASE_CORDOVA) $(CORDOVA_DART_JS) $(RELEASE_CORDOVA_RESOURCE_DST)
+	make $(RELEASE_CORDOVA_RESOURCE_DIR)
+	@if [ $(DART_JS) -nt $(RELEASE_CORDOVA)/main.dart.precompiled.js ]; then\
+		echo "cp $(DART_JS) $(RELEASE_CORDOVA)/main.dart.precompiled.js";\
+		cp $(DART_JS) $(RELEASE_CORDOVA)/main.dart.precompiled.js;\
+	fi;
+	@if [ -d $@ ]; then\
+		echo "cd $@; cca prepare";\
+		cd $@; cca prepare;\
+	else\
+		echo "cca create $@ --link-to=$(RELEASE_CORDOVA)/manifest.json";\
+		cca create $@ --link-to=$(RELEASE_CORDOVA)/manifest.json;\
+	fi;
+
+$(RELEASE_CORDOVA): $(RELEASE_DIR)
+	mkdir -p $@
+
+$(CORDOVA_DART_JS):
+	-patch -p1 --forward -i pubbuild.patch
+	make $(DART_JS)
+
+$(RELEASE_CORDOVA_RESOURCE_DST): $(RELEASE_RESOURCE_SRC)
+	@if [ ! -d $(dir $@) ]; then\
+		mkdir -p $(dir $@);\
+	fi;
+	cp $(subst $(RELEASE_CORDOVA),$(RELEASE_RESOURCE_SRC_DIR),$@) $@
+
+$(RELEASE_CORDOVA_RESOURCE_DIR): $(addprefix $(RELEASE_RESOURCE_SRC_DIR)/,bootstrap-3.1.1)
+	cp -r $< $@
+
+
+xcode: $(RELEASE_IOS)
 	open $</platforms/ios/Timecard.xcodeproj
 
 
 clean:
-	find . -type d -name .sass-cache |xargs rm -rf
-	find . -name "*.sw?" -delete
-	find . -name .DS_Store -delete
 	rm -f $(RESOURCE) $(VERSION_HTML)
-	rm -rf $(BUILD_DIR) $(CORDOVA_DIR)
+	rm -rf $(BUILD_DIR) $(RELEASE_DIR)
 	-patch -p1 --forward --reverse -i pubbuild.patch
-	rm -f pubspec.yaml.rej
 
 clean-all: clean
 	rm -f pubspec.lock
+	rm -f pubspec.yaml.rej
 	rm -rf $(ENDPOINTS_LIB) packages
+	find . -name "*.sw?" -delete
+	find . -name .DS_Store -delete
 	find . -name packages -type l -delete
+	find . -type d -name .sass-cache |xargs rm -rf
 
-.PHONY: $(VERSION_HTML) $(CORDOVA_IOS)
+.PHONY: $(VERSION_HTML) $(RELEASE_IOS)
