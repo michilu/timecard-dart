@@ -33,6 +33,10 @@ YAML=$(shell find web -type f -name "[^.]*.yaml")
 JSON=$(YAML:.yaml=.json)
 RESOURCE=$(HTML) $(CSS) $(MINCSS) $(JSON)
 VERSION_HTML=lib/component/version
+
+resource: $(RESOURCE) $(VERSION_HTML)
+
+
 pubserve: $(ENDPOINTS_LIB) $(RESOURCE) $(VERSION_HTML)
 	-patch -p1 --forward --reverse -i pubbuild.patch
 	pub serve --port 8080 --no-dart2js --force-poll
