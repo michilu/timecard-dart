@@ -102,9 +102,9 @@ class GoogleCloudEndpointService extends APIService {
   dynamic get workload  => _endpoint.workload;
 
   GoogleCloudEndpointService(this.c, this._http) {
-    RegExp AppleWebKitString = new RegExp(r"AppleWebKit");
-    // for AppleWebKit
-    if (AppleWebKitString.hasMatch(window.navigator.userAgent)) {
+    RegExp iOSString = new RegExp(r"iPhone|iPad");
+    // for iOS
+    if (iOSString.hasMatch(window.navigator.userAgent)) {
       GoogleOAuth2 auth = new GoogleOAuth2(c.client_id, _SCOPES, autoLogin:autoLogin());
       _postLogin(auth);
     } else {
