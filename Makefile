@@ -130,11 +130,15 @@ ios-sim: $(RELEASE_IOS)
 	cd $<; cca emulate ios
 
 
+RESOURCE_SUFFIX_FOR_BUILD = html css json js
+RESOURCE_DIR_FOR_BUILD = web web/js web/view web/packages/timecard_client/component web/packages/timecard_client/routing web/packages/timecard_client/service
+RESOURCE_FOR_BUILD = $(foreach suffix,$(RESOURCE_SUFFIX_FOR_BUILD),$(foreach dir,$(RESOURCE_DIR_FOR_BUILD),$(wildcard $(dir)/*.$(suffix))))
+BUILD_RESOURCE = $(addprefix build/,$(RESOURCE_FOR_BUILD))
 RELEASE_CORDOVA=$(RELEASE_DIR)/cordova
 RELEASE_CORDOVA_RESOURCE_DIR=$(addprefix $(RELEASE_CORDOVA)/,bootstrap-3.1.1)
 RELEASE_CORDOVA_RESOURCE_DST=$(foreach path,$(RELEASE_RESOURCE_SRC),$(subst $(RELEASE_RESOURCE_SRC_DIR),$(RELEASE_CORDOVA),$(path)))
 CORDOVA_DART_JS=cordova-dart-js
-$(RELEASE_IOS): $(ENDPOINTS_LIB) $(RESOURCE) $(VERSION_HTML) $(RELEASE_CORDOVA) $(CORDOVA_DART_JS) $(RELEASE_CORDOVA_RESOURCE_DST)
+$(RELEASE_IOS): $(ENDPOINTS_LIB) $(RESOURCE) $(BUILD_RESOURCE) $(VERSION_HTML) $(RELEASE_CORDOVA) $(CORDOVA_DART_JS) $(RELEASE_CORDOVA_RESOURCE_DST)
 	make $(RELEASE_CORDOVA_RESOURCE_DIR)
 	@if [ $(DART_JS) -nt $(RELEASE_CORDOVA)/main.dart.precompiled.js ]; then\
 		echo "cp $(DART_JS) $(RELEASE_CORDOVA)/main.dart.precompiled.js";\
