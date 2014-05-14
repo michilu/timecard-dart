@@ -127,7 +127,7 @@ $(RELEASE_RESOURCE_SRC): $(DART_JS)
 
 
 ios-sim: $(RELEASE_IOS)
-	cd $<; cca emulate $@
+	cd $<; cca emulate ios
 
 
 RELEASE_CORDOVA=$(RELEASE_DIR)/cordova
