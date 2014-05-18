@@ -154,6 +154,10 @@ $(RELEASE_IOS): $(ENDPOINTS_LIB) $(RESOURCE) $(BUILD_RESOURCE) $(VERSION_HTML) $
 		cca create $@ --link-to=$(RELEASE_CORDOVA)/manifest.json;\
 	fi;
 
+build/%: %
+	@mkdir -p $(dir $@)
+	cp $< $@
+
 $(RELEASE_CORDOVA): $(RELEASE_DIR)
 	mkdir -p $@
 
