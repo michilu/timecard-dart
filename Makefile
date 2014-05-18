@@ -55,6 +55,7 @@ $(VERSION_HTML):
 
 RELEASE_RESOURCE=\
 	index.html\
+	js/app.js\
 	js/browser_dart_csp_safe.js\
 	js/main.js\
 	main.dart\
@@ -71,6 +72,8 @@ RELEASE_RESOURCE=\
 	packages/timecard_client/component/nav.html\
 	packages/timecard_client/component/remember_me.html\
 	packages/timecard_client/component/version\
+	page1.html\
+	page2.html\
 	view/leave.html\
 	view/logout.html\
 	view/settings.html\

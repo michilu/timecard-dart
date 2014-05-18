@@ -1,0 +1,4 @@
+%ons-page.center
+  %div(ng-controller="Page1Ctrl")
+    %ons-list
+      %ons-list-item(ng-repeat="item in items" ng-click="next($index)") {{item}}
