@@ -11,12 +11,22 @@
   [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide {
     display: none !important;
   }
+  .topcoat-navigation-bar {
+    padding-top: 20px;
+    height: 60px;
+  }
   body {
     padding-top: 100px;
+    font-family: -apple-system-font !important;
   }
 
 %link(rel="apple-touch-icon-precomposed" href="/static/img/apple-touch-icon.png")
 %link(rel="stylesheet" href="bootstrap-3.1.1/css/bootstrap.min.css")
+%link(rel="stylesheet" href="vendors/onsen/css/onsenui.css")
+%link(rel="stylesheet" href="vendors/onsen/css/topcoat-mobile-onsen-ios7.css")
+%script(src="vendors/onsen/js/angular/angular.js")
+%script(src="vendors/onsen/js/angular/angular-touch.js")
+%script(src="vendors/onsen/js/onsenui.js")
 %script(src="js/browser_dart_csp_safe.js")
 %script(src="packages/chrome/bootstrap.js" defer)
 %script(src="packages/shadow_dom/shadow_dom.min.js")
