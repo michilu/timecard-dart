@@ -102,7 +102,7 @@ $(CHROME_APPS_DART_JS):
 	-patch -p1 --forward --reverse -i pubbuild.patch
 	make $(DART_JS)
 
-$(RELEASE_CHROME_APPS_RESOURCE_DST): $(RELEASE_RESOURCE_SRC)
+$(RELEASE_CHROME_APPS_RESOURCE_DST): $(CHROME_APPS_DART_JS)
 	@if [ ! -d $(dir $@) ]; then\
 		mkdir -p $(dir $@);\
 	fi;
@@ -127,8 +127,6 @@ $(DART_JS): pubspec.yaml $(DART)
 $(RELEASE_CHROME_APPS_RESOURCE_DIR): $(addprefix $(RELEASE_RESOURCE_SRC_DIR)/,bootstrap-3.1.1)
 	cp -r $< $@
 
-$(RELEASE_RESOURCE_SRC): $(DART_JS)
-
 
 ios-sim: $(RELEASE_IOS)
 	cd $<; cca emulate ios
@@ -142,7 +140,7 @@ RELEASE_CORDOVA=$(RELEASE_DIR)/cordova
 RELEASE_CORDOVA_RESOURCE_DIR=$(addprefix $(RELEASE_CORDOVA)/,bootstrap-3.1.1)
 RELEASE_CORDOVA_RESOURCE_DST=$(foreach path,$(RELEASE_RESOURCE_SRC),$(subst $(RELEASE_RESOURCE_SRC_DIR),$(RELEASE_CORDOVA),$(path)))
 CORDOVA_DART_JS=cordova-dart-js
-$(RELEASE_IOS): $(ENDPOINTS_LIB) $(RESOURCE) $(BUILD_RESOURCE) $(VERSION_HTML) $(RELEASE_CORDOVA) $(CORDOVA_DART_JS) $(RELEASE_CORDOVA_RESOURCE_DST)
+$(RELEASE_IOS): $(ENDPOINTS_LIB) $(RESOURCE) $(BUILD_RESOURCE) $(VERSION_HTML) $(RELEASE_CORDOVA) $(RELEASE_CORDOVA_RESOURCE_DST)
 	make $(RELEASE_CORDOVA_RESOURCE_DIR)
 	@if [ $(DART_JS) -nt $(RELEASE_CORDOVA)/main.dart.precompiled.js ]; then\
 		echo "cp $(DART_JS) $(RELEASE_CORDOVA)/main.dart.precompiled.js";\
@@ -163,7 +161,7 @@ $(CORDOVA_DART_JS):
 	-patch -p1 --forward -i pubbuild.patch
 	make $(DART_JS)
 
-$(RELEASE_CORDOVA_RESOURCE_DST): $(RELEASE_RESOURCE_SRC)
+$(RELEASE_CORDOVA_RESOURCE_DST): $(CORDOVA_DART_JS)
 	@if [ ! -d $(dir $@) ]; then\
 		mkdir -p $(dir $@);\
 	fi;
