@@ -1,9 +1,9 @@
 (function() {
     var app = angular.module('myApp', ['onsen.directives', 'ngTouch']);
 
-    document.addEventListener('deviceready', function() {
-        angular.bootstrap(document, ['myApp']);
-    }, false);
+    //document.addEventListener('deviceready', function() {
+    //    angular.bootstrap(document, ['myApp']);
+    //}, false);
 
     app.factory('Data', function() {
         var Data = {};
