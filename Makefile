@@ -128,6 +128,9 @@ $(RELEASE_CHROME_APPS_RESOURCE_DIR): $(addprefix $(RELEASE_RESOURCE_SRC_DIR)/,bo
 	cp -r $< $@
 
 
+ios: $(RELEASE_IOS)
+	cd $<; cca run ios
+
 ios-sim: $(RELEASE_IOS)
 	cd $<; cca emulate ios
 
