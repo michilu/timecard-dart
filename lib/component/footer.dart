@@ -4,7 +4,7 @@ import "dart:async";
 import "dart:html";
 
 import "package:angular/angular.dart";
-//import 'package:intl/intl.dart';
+import 'package:intl/intl.dart';
 
 @Component(
   selector: "footer-component",
@@ -18,9 +18,7 @@ class FooterComponent {
   Http _http;
   String version;
   final versionUri = "/packages/timecard_client/component/version";
-  // workaround for cordova #TODO
-  //final year = new DateFormat("y").format(new DateTime.now());
-  final year = 2014;
+  final year = new DateFormat("y").format(new DateTime.now());
 
   FooterComponent(this._http) {
     var load = _get_version();
