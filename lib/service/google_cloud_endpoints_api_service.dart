@@ -102,25 +102,18 @@ class GoogleCloudEndpointService extends APIService {
   dynamic get workload  => _endpoint.workload;
 
   GoogleCloudEndpointService(this.c, this._http) {
-    RegExp iOSString = new RegExp(r"iPhone|iPad");
-    // for iOS
-    if (iOSString.hasMatch(window.navigator.userAgent)) {
+    try {
+      // for Google Apps
+      var details = new chrome.TokenDetails(interactive:true);
+      chrome.identity.getAuthToken(details)
+      .then((token) {
+        OAuth2 auth = new SimpleOAuth2(token);
+        _postLogin(auth);
+      });
+    // for dartium
+    } on UnsupportedError catch(_) {
       GoogleOAuth2 auth = new GoogleOAuth2(c.client_id, _SCOPES, autoLogin:autoLogin());
       _postLogin(auth);
-    } else {
-      try {
-        // for Google Apps
-        var details = new chrome.TokenDetails(interactive:true);
-        chrome.identity.getAuthToken(details)
-        .then((token) {
-          OAuth2 auth = new SimpleOAuth2(token);
-          _postLogin(auth);
-        });
-      // for dartium
-      } on UnsupportedError catch(_) {
-        GoogleOAuth2 auth = new GoogleOAuth2(c.client_id, _SCOPES, autoLogin:autoLogin());
-        _postLogin(auth);
-      }
     }
   }
 
