@@ -1,0 +1,23 @@
+%ons-page(style="background-color: white")
+  %ul.topcoat-list
+    %ons-list-item.topcoat-list__item--tappable.topcoat-list__item__line-height(ng-click="ons.slidingMenu.toggleMenu()")
+      %i.fa.fa-home.fa-lg(style="color: #666")
+      &nbsp; Workload
+    %ons-list-item.topcoat-list__item--tappable.topcoat-list__item__line-height(ng-click="ons.slidingMenu.toggleMenu()")
+      %i.fa.fa-dashboard.fa-lg(style="color: #666")
+      &nbsp; Dashbord
+    %ons-list-item.topcoat-list__item--tappable.topcoat-list__item__line-height(ng-click="ons.slidingMenu.toggleMenu()")
+      %i.fa.fa-cubes.fa-lg(style="color: #666")
+      &nbsp; Projects
+    %ons-list-item.topcoat-list__item--tappable.topcoat-list__item__line-height(ng-click="ons.slidingMenu.toggleMenu()")
+      %i.fa.fa-list-alt.fa-lg(style="color: #666")
+      &nbsp; Issues
+    %ons-list-item.topcoat-list__item--tappable.topcoat-list__item__line-height(ng-show="c.a.logged_in()" ng-click="ons.slidingMenu.toggleMenu(); ons.slidingMenu.setAbovePage('settings.html')")
+      %i.fa.fa-user.fa-lg(style="color: #666")
+      &nbsp; Account
+    %ons-list-item.topcoat-list__item--tappable.topcoat-list__item__line-height(ng-show="c.a.logged_in()" ng-click="c.a.Logout();ons.slidingMenu.toggleMenu()")
+      %i.fa.fa-sign-out.fa-lg(style="color: #666")
+      &nbsp; Logout
+    %ons-list-item.topcoat-list__item--tappable.topcoat-list__item__line-height(ng-show="c.a.logged_in()" ng-click="ons.slidingMenu.toggleMenu()")
+      %i.fa.fa-gear.fa-lg(style="color: #666")
+      &nbsp; Settings

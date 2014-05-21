@@ -72,10 +72,9 @@ RELEASE_RESOURCE=\
 	packages/timecard_client/component/nav.html\
 	packages/timecard_client/component/remember_me.html\
 	packages/timecard_client/component/version\
-	page1.html\
-	page2.html\
 	view/leave.html\
 	view/logout.html\
+	view/menu.html\
 	view/settings.html\
 	view/signup.html\
 	view/top.html\
