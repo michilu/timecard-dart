@@ -36,9 +36,6 @@ class GoogleCloudEndpointModel extends Model {
   }
 
   Future _get_me() {
-    if (!_api.autoLogin()) {
-      return null;
-    }
     var completer = _api.loading_completer();
     return _api.me.get().then((response) {
       me = response;
@@ -112,7 +109,7 @@ class GoogleCloudEndpointService extends APIService {
       });
     // for dartium
     } on UnsupportedError catch(_) {
-      GoogleOAuth2 auth = new GoogleOAuth2(c.client_id, _SCOPES, autoLogin:autoLogin());
+      GoogleOAuth2 auth = new GoogleOAuth2(c.client_id, _SCOPES);
       _postLogin(auth);
     }
   }
@@ -122,20 +119,6 @@ class GoogleCloudEndpointService extends APIService {
     _endpoint.rootUrl = c.root_url;
     _endpoint.makeAuthRequests = true;
     model = new GoogleCloudEndpointModel(this);
-  }
-
-  bool autoLogin() {
-    bool result;
-    switch (window.location.hash) {
-      case "#/logout":
-      case "#/leave":
-        result = false;
-        break;
-      default:
-        result = true;
-        break;
-    };
-    return result;
   }
 
   MainApiV1MessageUserRequest new_user(data) => new MainApiV1MessageUserRequest.fromJson(data);
