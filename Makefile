@@ -39,6 +39,10 @@ resource: $(RESOURCE) $(VERSION_HTML)
 
 pubserve: $(VERSION_HTML) $(ENDPOINTS_LIB) $(RESOURCE)
 	-patch -p1 --forward --reverse -i pubbuild.patch
+	pub serve --port 8080 --no-dart2js
+
+pubserve-force-poll: $(VERSION_HTML) $(ENDPOINTS_LIB) $(RESOURCE)
+	-patch -p1 --forward --reverse -i pubbuild.patch
 	pub serve --port 8080 --no-dart2js --force-poll
 
 $(ENDPOINTS_LIB):
