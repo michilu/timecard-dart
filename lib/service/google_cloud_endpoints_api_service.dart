@@ -98,7 +98,9 @@ class GoogleCloudEndpointService extends APIService {
   dynamic get user      => _endpoint.user    ;
   dynamic get workload  => _endpoint.workload;
 
-  GoogleCloudEndpointService(this.c, this._http) {
+  GoogleCloudEndpointService(this.c, this._http);
+
+  void login() {
     try {
       // for Google Apps
       var details = new chrome.TokenDetails(interactive:true);
