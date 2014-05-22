@@ -61,6 +61,8 @@ RELEASE_RESOURCE=\
 	index.html\
 	js/browser_dart_csp_safe.js\
 	js/main.js\
+	js/app.js\
+	js/controllers.js\
 	main.dart\
 	manifest.json\
 	manifest.mobile.json\
@@ -80,6 +82,11 @@ RELEASE_RESOURCE=\
 	view/settings.html\
 	view/signup.html\
 	view/top.html\
+	templates/browse.html\
+	templates/menu.html\
+	templates/playlist.html\
+	templates/playlists.html\
+	templates/search.html\
 
 RELEASE_CHROME_APPS=$(RELEASE_DIR)/chrome-apps
 RELEASE_CHROME_APPS_RESOURCE_DIR=$(addprefix $(RELEASE_CHROME_APPS)/,bootstrap-3.1.1)
