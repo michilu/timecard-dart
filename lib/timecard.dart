@@ -92,7 +92,6 @@ class TimecardModule extends Module {
   TimecardModule() {
 
     install(new EditUserModule());
-    install(new FeedbackModule());
     install(new FooterModule());
     install(new NavModule());
     install(new RememberMeModule());
