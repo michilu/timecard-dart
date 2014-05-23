@@ -141,12 +141,13 @@ $(RELEASE_IOS): $(VERSION_HTML) $(ENDPOINTS_LIB) $(RESOURCE) $(BUILD_RESOURCE) $
 		echo "cp $(DART_JS) $(RELEASE_CORDOVA)/main.dart.precompiled.js";\
 		cp $(DART_JS) $(RELEASE_CORDOVA)/main.dart.precompiled.js;\
 	fi;
-	@if [ -d $@ ]; then\
-		echo "cd $@; cca prepare";\
-		cd $@; cca prepare;\
-	else\
+	@if ! (cd $@ && cca prepare); then\
+		echo "rm -rf $@";\
+		rm -rf $@;\
 		echo "cca create $@ --link-to=$(RELEASE_CORDOVA)/manifest.json";\
 		cca create $@ --link-to=$(RELEASE_CORDOVA)/manifest.json;\
+		echo "git checkout release/ios/config.xml";\
+		git checkout release/ios/config.xml;\
 	fi;
 
 build/%: %
@@ -177,6 +178,7 @@ xcode: $(RELEASE_IOS)
 clean:
 	rm -f $(VERSION_HTML) $(RESOURCE)
 	rm -rf $(BUILD_DIR) $(RELEASE_DIR)
+	git checkout release/ios/config.xml
 	-patch -p1 --forward --reverse -i pubbuild.patch
 
 clean-all: clean
