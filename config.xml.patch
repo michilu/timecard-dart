@@ -1,0 +1,11 @@
+--- a/release/ios/config.xml
++++ b/release/ios/config.xml
+@@ -9,5 +9,8 @@
+     <preference name="iosPersistentFileLocation" value="Library" />
+     <preference name="AndroidPersistentFileLocation" value="Internal" />
+     <content src="plugins/org.chromium.bootstrap/chromeapp.html" />
++    <feature name="StatusBar">
++        <param name="ios-package" onload="true" value="CDVStatusBar" />
++    </feature>
+     <access origin="*://*/*" />
+ </widget>

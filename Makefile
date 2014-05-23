@@ -155,6 +155,7 @@ RELEASE_CORDOVA=$(RELEASE_DIR)/cordova
 RELEASE_CORDOVA_RESOURCE_DIR=$(addprefix $(RELEASE_CORDOVA)/,$(RELEASE_RESOURCE_DIR))
 RELEASE_CORDOVA_RESOURCE_DST=$(foreach path,$(RELEASE_RESOURCE_SRC),$(subst $(RELEASE_RESOURCE_SRC_DIR),$(RELEASE_CORDOVA),$(path)))
 CORDOVA_DART_JS=cordova-dart-js
+IONIC_PLUGINS_KEYBOARD=submodule/ionic-plugins-keyboard
 $(RELEASE_IOS): $(VERSION_HTML) $(ENDPOINTS_LIB) $(RESOURCE) $(BUILD_RESOURCE) $(RELEASE_CORDOVA) $(CORDOVA_DART_JS) $(RELEASE_CORDOVA_RESOURCE_DST)
 	make $(RELEASE_CORDOVA_RESOURCE_DIR)
 	@if [ $(DART_JS) -nt $(RELEASE_CORDOVA)/main.dart.precompiled.js ]; then\
@@ -167,6 +168,10 @@ $(RELEASE_IOS): $(VERSION_HTML) $(ENDPOINTS_LIB) $(RESOURCE) $(BUILD_RESOURCE) $
 	else\
 		echo "cca create $@ --link-to=$(RELEASE_CORDOVA)/manifest.json";\
 		cca create $@ --link-to=$(RELEASE_CORDOVA)/manifest.json;\
+		echo "patch -p1 -i config.xml.patch";\
+		patch -p1 -i config.xml.patch;\
+		echo "cd $@; cca plugin add ../../$(IONIC_PLUGINS_KEYBOARD)";\
+		cd $@; cca plugin add ../../$(IONIC_PLUGINS_KEYBOARD);\
 	fi;
 
 build/%: %
