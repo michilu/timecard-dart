@@ -9,7 +9,7 @@ import 'package:intl/intl.dart';
 @Component(
   selector: "footer-component",
   templateUrl: "packages/timecard_client/component/footer.html",
-  applyAuthorStyles: true,
+  useShadowDom: false,
   publishAs: "c"
 )
 class FooterComponent {

@@ -129,7 +129,7 @@ class RememberMe {
 @Component(
   selector: "remember_me-component",
   templateUrl: "packages/timecard_client/component/remember_me.html",
-  applyAuthorStyles: true,
+  useShadowDom: false,
   publishAs: "c"
 )
 class RememberMeComponent {

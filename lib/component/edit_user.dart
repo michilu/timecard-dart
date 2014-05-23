@@ -12,7 +12,7 @@ import "dart:mirrors";
 @Component(
   selector: "edit_user-component",
   templateUrl: "packages/timecard_client/component/edit_user.html",
-  applyAuthorStyles: true,
+  useShadowDom: false,
   publishAs: "c"
 )
 class EditUserComponent {

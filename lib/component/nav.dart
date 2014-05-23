@@ -5,7 +5,7 @@ import "package:angular/angular.dart";
 @Component(
   selector: "nav-component",
   templateUrl: "packages/timecard_client/component/nav.html",
-  applyAuthorStyles: true,
+  useShadowDom: false,
   publishAs: "c"
 )
 class NavComponent {
