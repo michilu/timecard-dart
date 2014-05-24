@@ -8,7 +8,22 @@
   %ion-side-menu(side="left")
     %header.bar.bar-header.bar-stable
       %h1.title
-        Left
+        Settings
+    %ion-content.has-header
+      %ion-list
+        %ion-item(nav-clear menu-close href="#/app/playlists")
+          Account
+        %ion-item(nav-clear menu-close href="#/app/playlists")
+          Logout
+        %ion-item(nav-clear menu-close href="#/app/playlists")
+          settings
+        %ion-item(nav-clear menu-close href="#/app/playlists")
+          Feedback
+      %footer-component
+  %ion-side-menu(side="right")
+    %header.bar.bar-header.bar-stable
+      %h1.title
+        Select
     %ion-content.has-header
       %ion-list
         %ion-item(nav-clear menu-close href="#/app/search")
@@ -19,12 +34,3 @@
           Projects
         %ion-item(nav-clear menu-close href="#/app/playlists")
           Issues
-        %ion-item(nav-clear menu-close href="#/app/playlists")
-          Account
-        %ion-item(nav-clear menu-close href="#/app/playlists")
-          Logout
-        %ion-item(nav-clear menu-close href="#/app/playlists")
-          settings
-        %ion-item(nav-clear menu-close href="#/app/playlists")
-          Feedback
-      %footer-component
