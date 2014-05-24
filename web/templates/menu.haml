@@ -1,0 +1,30 @@
+%ion-side-menus
+  %ion-pane(ion-side-menu-content)
+    %ion-nav-bar.bar-stable.nav-title-slide-ios7
+      %ion-nav-back-button.button-clear
+        %i.icon.ion-chevron-left
+        Back
+    %ion-nav-view(name="menuContent" animation="slide-left-right")
+  %ion-side-menu(side="left")
+    %header.bar.bar-header.bar-stable
+      %h1.title
+        Left
+    %ion-content.has-header
+      %ion-list
+        %ion-item(nav-clear menu-close href="#/app/search")
+          Workload
+        %ion-item(nav-clear menu-close href="#/app/browse")
+          Dashbord
+        %ion-item(nav-clear menu-close href="#/app/playlists")
+          Projects
+        %ion-item(nav-clear menu-close href="#/app/playlists")
+          Issues
+        %ion-item(nav-clear menu-close href="#/app/playlists")
+          Account
+        %ion-item(nav-clear menu-close href="#/app/playlists")
+          Logout
+        %ion-item(nav-clear menu-close href="#/app/playlists")
+          settings
+        %ion-item(nav-clear menu-close href="#/app/playlists")
+          Feedback
+      %footer-component

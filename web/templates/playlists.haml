@@ -1,0 +1,7 @@
+%ion-view(title="Playlists")
+  %ion-nav-buttons(side="left")
+    %button.button.button-icon.icon.ion-navicon(menu-toggle="left")
+  %ion-content.has-header
+    %ion-list
+      %ion-item(ng-repeat="playlist in playlists" href="#/app/playlists/{{playlist.id}}")
+        {{playlist.title}}
