@@ -62,7 +62,6 @@ RELEASE_RESOURCE=\
 	js/browser_dart_csp_safe.js\
 	js/main.js\
 	js/app.js\
-	js/controllers.js\
 	main.dart\
 	manifest.json\
 	manifest.mobile.json\
