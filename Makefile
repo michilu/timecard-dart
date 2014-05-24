@@ -113,7 +113,7 @@ $(CHROME_APPS_DART_JS):
 	-patch -p1 --forward --reverse -i pubbuild.patch
 	make $(DART_JS)
 
-$(RELEASE_CHROME_APPS_RESOURCE_DST): $(CHROME_APPS_DART_JS)
+$(RELEASE_CHROME_APPS_RESOURCE_DST): $(RELEASE_RESOURCE_SRC) $(CHROME_APPS_DART_JS)
 	@if [ ! -d $(dir $@) ]; then\
 		mkdir -p $(dir $@);\
 	fi;
@@ -183,7 +183,7 @@ $(CORDOVA_DART_JS):
 	-patch -p1 --forward -i pubbuild.patch
 	make $(DART_JS)
 
-$(RELEASE_CORDOVA_RESOURCE_DST): $(CORDOVA_DART_JS)
+$(RELEASE_CORDOVA_RESOURCE_DST): $(RELEASE_RESOURCE_SRC) $(CORDOVA_DART_JS)
 	@if [ ! -d $(dir $@) ]; then\
 		mkdir -p $(dir $@);\
 	fi;
