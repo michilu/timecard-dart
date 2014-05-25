@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.phonegaptips.googleoauth" version="1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Timecard</name>
+<widget id="com.appspot.timecard-gae.ionic" version="1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>ionic</name>
     <description />
     <author />
     <preference name="KeyboardShrinksView" value="true" />

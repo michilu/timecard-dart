@@ -1,4 +1,4 @@
-packageId: com.phonegaptips.googleoauth
+packageId: com.appspot.timecard-gae.ionic
 versionCode: 1
 CFBundleVersion: "1.1.1"
 ios:
