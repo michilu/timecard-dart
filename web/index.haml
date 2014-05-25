@@ -25,49 +25,68 @@
 %script(src="main.dart" type="application/dart")
 %body(app ng-app="starter")/
 
-%ion-nav-view
-
 %ion-side-menus
-  %ion-pane(ion-side-menu-content)
-    %ion-nav-bar.bar-stable.nav-title-slide-ios7
-      %ion-nav-back-button.button-clear
-        %i.icon.ion-chevron-left
-        Back
-    %ion-nav-view(name="menuContent" animation="slide-left-right")
+
   %ion-side-menu(side="left")
     %header.bar.bar-header.bar-stable
       %h1.title
         Settings
     %ion-content.has-header
       %ion-list
-        %ion-item(nav-clear menu-close href="#/app/playlists")
+        %ion-item(nav-clear menu-close)
           %i.icon.ion-person
           Account
-        %ion-item(nav-clear menu-close href="#/app/playlists")
+        %ion-item(nav-clear menu-close)
           %i.icon.ion-log-out
           Logout
-        %ion-item(nav-clear menu-close href="#/app/playlists")
+        %ion-item(nav-clear menu-close)
           %i.icon.ion-gear-a
           settings
-        %ion-item(nav-clear menu-close href="#/app/playlists")
+        %ion-item(nav-clear menu-close)
           %i.icon.ion-paper-airplane
           Feedback
       %footer-component
+
   %ion-side-menu(side="right")
     %header.bar.bar-header.bar-stable
       %h1.title
         Select
     %ion-content.has-header
       %ion-list
-        %ion-item(nav-clear menu-close href="#/app/search")
+        %ion-item(nav-clear menu-close)
           %i.icon.ion-speedometer
           Workload
-        %ion-item(nav-clear menu-close href="#/app/browse")
+        %ion-item(nav-clear menu-close)
           %i.icon.ion-grid
           Dashbord
-        %ion-item(nav-clear menu-close href="#/app/playlists")
+        %ion-item(nav-clear menu-close)
           %i.icon.ion-filing
           Projects
-        %ion-item(nav-clear menu-close href="#/app/playlists")
+        %ion-item(nav-clear menu-close)
           %i.icon.ion-hammer
           Issues
+
+  %ion-tabs.tabs-icon-only.tabs-positive(ion-side-menu-content)
+
+    %ion-tab(title="Home" icon-on="ion-ios7-filing" icon-off="ion-ios7-filing-outline")
+      %ion-header-bar.bar-positive
+        %button.button.button-clear(ng-click="") New
+        %h1.title Tasks
+      %ion-content(has-tabs="true" on-refresh="onRefresh()")
+        %ion-refresher
+        %ion-list(scroll="false" on-refresh="onRefresh()" s-editing="isEditingItems" animation="fade-out" delete-icon="icon ion-minus-circled")
+          %ion-item(ng-repeat="item in items" item="item" buttons="item.buttons" can-delete="true" can-swipe="true" on-delete="deleteItem(item)" ng-class="{completed: item.isCompleted}")
+            {{item.title}}
+            %i(ng-class="{{item.icon}}")
+
+    %ion-tab(title="About" icon-on="icon ion-ios7-clock" icon-off="icon ion-ios7-clock-outline")
+      %header.bar.bar-header.bar-positive
+        %h1.title Deadlines
+      %ion-content(has-header="true")
+        %h1 Deadlines
+
+    %ion-tab(title="Settings" icon-on="icon ion-ios7-gear" icon-off="icon ion-ios7-gear-outline")
+      %header.bar.bar-header.bar-positive
+        %h1.title Settings
+      %ion-content(has-header="true")
+        %h1 Settings
