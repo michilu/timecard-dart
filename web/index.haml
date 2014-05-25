@@ -70,8 +70,11 @@
 
     %ion-tab(title="Home" icon-on="ion-ios7-filing" icon-off="ion-ios7-filing-outline")
       %ion-header-bar.bar-positive
-        %button.button.button-clear(ng-click="") New
+        .buttons.left-buttons
+          %button.button.button-icon.icon.ion-navicon(menu-toggle="left")
         %h1.title Tasks
+        .buttons.right-buttons
+          %button.button.button-icon.icon.ion-navicon(menu-toggle="right")
       %ion-content(has-tabs="true" on-refresh="onRefresh()")
         %ion-refresher
         %ion-list(scroll="false" on-refresh="onRefresh()" s-editing="isEditingItems" animation="fade-out" delete-icon="icon ion-minus-circled")
@@ -80,13 +83,21 @@
             %i(ng-class="{{item.icon}}")
 
     %ion-tab(title="About" icon-on="icon ion-ios7-clock" icon-off="icon ion-ios7-clock-outline")
-      %header.bar.bar-header.bar-positive
+      %ion-header-bar.bar-positive
+        .buttons.left-buttons
+          %button.button.button-icon.icon.ion-navicon(menu-toggle="left")
         %h1.title Deadlines
+        .buttons.right-buttons
+          %button.button.button-icon.icon.ion-navicon(menu-toggle="right")
       %ion-content(has-header="true")
         %h1 Deadlines
 
     %ion-tab(title="Settings" icon-on="icon ion-ios7-gear" icon-off="icon ion-ios7-gear-outline")
-      %header.bar.bar-header.bar-positive
+      %ion-header-bar.bar-positive
+        .buttons.left-buttons
+          %button.button.button-icon.icon.ion-navicon(menu-toggle="left")
         %h1.title Settings
+        .buttons.right-buttons
+          %button.button.button-icon.icon.ion-navicon(menu-toggle="right")
       %ion-content(has-header="true")
         %h1 Settings
