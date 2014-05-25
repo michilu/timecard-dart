@@ -58,37 +58,23 @@ $(VERSION_HTML):
 
 
 RELEASE_RESOURCE=\
-	index.html\
-	js/app.js\
-	js/browser_dart_csp_safe.js\
-	js/main.js\
-	main.dart\
-	manifest.json\
-	manifest.mobile.json\
-	packages/angular_ui/modal/window.html\
-	packages/browser/dart.js\
-	packages/chrome/bootstrap.js\
-	packages/shadow_dom/shadow_dom.min.js\
-	packages/timecard_client/component/edit_user.html\
-	packages/timecard_client/component/feedback_form.html\
-	packages/timecard_client/component/feedback_link.html\
-	packages/timecard_client/component/footer.html\
-	packages/timecard_client/component/nav.html\
-	packages/timecard_client/component/remember_me.html\
-	packages/timecard_client/component/version\
-	view/leave.html\
-	view/logout.html\
-	view/menu.html\
-	view/settings.html\
-	view/signup.html\
-	view/top.html\
+	$(foreach path,$(HTML) $(VERSION_HTML),$(subst lib,web/packages/timecard_client,$(path)))\
+	$(JSON)\
+	web/js/app.js\
+	web/js/browser_dart_csp_safe.js\
+	web/js/main.js\
+	web/main.dart\
+	web/packages/angular_ui/modal/window.html\
+	web/packages/browser/dart.js\
+	web/packages/chrome/bootstrap.js\
+	web/packages/shadow_dom/shadow_dom.min.js\
 
 RELEASE_CHROME_APPS=$(RELEASE_DIR)/chrome-apps
 RELEASE_RESOURCE_DIR=onsen-1.0.4
-RELEASE_CHROME_APPS_RESOURCE_DIR=$(addprefix $(RELEASE_CHROME_APPS)/,$(RELEASE_RESOURCE_DIR))
+RELEASE_CHROME_APPS_RESOURCE_DIR=$(foreach path,$(RELEASE_RESOURCE_DIR),$(addprefix $(RELEASE_CHROME_APPS)/,$(path)))
 BUILD_DIR=build
 RELEASE_RESOURCE_SRC_DIR=$(BUILD_DIR)/web
-RELEASE_RESOURCE_SRC=$(addprefix $(RELEASE_RESOURCE_SRC_DIR)/,$(RELEASE_RESOURCE))
+RELEASE_RESOURCE_SRC=$(addprefix $(BUILD_DIR)/,$(RELEASE_RESOURCE))
 RELEASE_CHROME_APPS_RESOURCE_DST=$(foreach path,$(RELEASE_RESOURCE_SRC),$(subst $(RELEASE_RESOURCE_SRC_DIR),$(RELEASE_CHROME_APPS),$(path)))
 CHROME_APPS_DART_JS=chrome-apps-dart-js
 chrome-apps: $(VERSION_HTML) $(ENDPOINTS_LIB) $(RESOURCE) $(RELEASE_CHROME_APPS) $(CHROME_APPS_DART_JS) $(RELEASE_CHROME_APPS_RESOURCE_DST)
@@ -109,7 +95,7 @@ $(CHROME_APPS_DART_JS):
 	-patch -p1 --forward --reverse -i pubbuild.patch
 	make $(DART_JS)
 
-$(RELEASE_CHROME_APPS_RESOURCE_DST): $(CHROME_APPS_DART_JS)
+$(RELEASE_CHROME_APPS_RESOURCE_DST): $(RELEASE_RESOURCE_SRC) $(CHROME_APPS_DART_JS)
 	@if [ ! -d $(dir $@) ]; then\
 		mkdir -p $(dir $@);\
 	fi;
@@ -131,8 +117,8 @@ DART=$(foreach dir,$(RESOURCE_DIR),$(wildcard $(dir)/*.dart))
 $(DART_JS): pubspec.yaml $(DART)
 	pub build --mode=debug
 
-$(RELEASE_CHROME_APPS_RESOURCE_DIR): $(addprefix $(RELEASE_RESOURCE_SRC_DIR)/,$(RELEASE_RESOURCE_DIR))
-	cp -r $< $@
+$(RELEASE_CHROME_APPS_RESOURCE_DIR): $(foreach path,$(RELEASE_RESOURCE_DIR),$(addprefix $(RELEASE_RESOURCE_SRC_DIR)/,$(path)))
+	cp -r $(subst $(RELEASE_CHROME_APPS),$(RELEASE_RESOURCE_SRC_DIR),$@) $@
 
 
 ios: $(RELEASE_IOS)
@@ -147,7 +133,7 @@ RESOURCE_DIR_FOR_BUILD = web web/js web/view web/packages/timecard_client/compon
 RESOURCE_FOR_BUILD = $(foreach suffix,$(RESOURCE_SUFFIX_FOR_BUILD),$(foreach dir,$(RESOURCE_DIR_FOR_BUILD),$(wildcard $(dir)/*.$(suffix))))
 BUILD_RESOURCE = $(addprefix build/,$(RESOURCE_FOR_BUILD))
 RELEASE_CORDOVA=$(RELEASE_DIR)/cordova
-RELEASE_CORDOVA_RESOURCE_DIR=$(addprefix $(RELEASE_CORDOVA)/,$(RELEASE_RESOURCE_DIR))
+RELEASE_CORDOVA_RESOURCE_DIR=$(foreach path,$(RELEASE_RESOURCE_DIR),$(addprefix $(RELEASE_CORDOVA)/,$(path)))
 RELEASE_CORDOVA_RESOURCE_DST=$(foreach path,$(RELEASE_RESOURCE_SRC),$(subst $(RELEASE_RESOURCE_SRC_DIR),$(RELEASE_CORDOVA),$(path)))
 CORDOVA_DART_JS=cordova-dart-js
 $(RELEASE_IOS): $(VERSION_HTML) $(ENDPOINTS_LIB) $(RESOURCE) $(BUILD_RESOURCE) $(RELEASE_CORDOVA) $(CORDOVA_DART_JS) $(RELEASE_CORDOVA_RESOURCE_DST)
@@ -175,14 +161,14 @@ $(CORDOVA_DART_JS):
 	-patch -p1 --forward -i pubbuild.patch
 	make $(DART_JS)
 
-$(RELEASE_CORDOVA_RESOURCE_DST): $(CORDOVA_DART_JS)
+$(RELEASE_CORDOVA_RESOURCE_DST): $(RELEASE_RESOURCE_SRC) $(CORDOVA_DART_JS)
 	@if [ ! -d $(dir $@) ]; then\
 		mkdir -p $(dir $@);\
 	fi;
 	cp $(subst $(RELEASE_CORDOVA),$(RELEASE_RESOURCE_SRC_DIR),$@) $@
 
-$(RELEASE_CORDOVA_RESOURCE_DIR): $(addprefix $(RELEASE_RESOURCE_SRC_DIR)/,$(RELEASE_RESOURCE_DIR))
-	cp -r $< $@
+$(RELEASE_CORDOVA_RESOURCE_DIR): $(foreach path,$(RELEASE_RESOURCE_DIR),$(addprefix $(RELEASE_RESOURCE_SRC_DIR)/,$(path)))
+	cp -r $(subst $(RELEASE_CORDOVA),$(RELEASE_RESOURCE_SRC_DIR),$@) $@
 
 
 xcode: $(RELEASE_IOS)
