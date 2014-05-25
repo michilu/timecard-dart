@@ -23,12 +23,6 @@ angular.module('starter', ['ionic'])
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
-    .state('app', {
-      url: "/app",
-      abstract: true,
-      templateUrl: "templates/menu.html"
-    })
-
     .state('app.search', {
       url: "/search",
       views: {
