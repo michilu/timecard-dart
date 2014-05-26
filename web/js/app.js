@@ -19,3 +19,12 @@ angular.module('starter', ['ionic'])
     }
   });
 })
+
+.controller('app', function($scope, $ionicModal) {
+  $ionicModal.fromTemplateUrl('modal.html', {
+    //focusFirstInput: true,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+});
