@@ -60,6 +60,7 @@ $(VERSION_HTML):
 RELEASE_RESOURCE=\
 	$(foreach path,$(HTML) $(VERSION_HTML),$(subst lib,web/packages/timecard_client,$(path)))\
 	$(JSON)\
+	$(shell find web/icons -name "*.png")\
 	web/js/browser_dart_csp_safe.js\
 	web/js/main.js\
 	web/main.dart\
