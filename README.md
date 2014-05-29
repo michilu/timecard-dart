@@ -68,9 +68,7 @@ Dependencies
 * Node.js v0.10+ (dependenced by cordova)
   * npm@1.4.5+
   * ios-deploy@1.0.6
-  * cca@0.0.11
+  * cca@0.1.0
 
 Known Bugs
 ----------
-
-* https://github.com/MobileChromeApps/mobile-chrome-apps/pull/158
