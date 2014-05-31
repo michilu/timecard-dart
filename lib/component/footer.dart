@@ -8,24 +8,11 @@ part of timecard_client;
 )
 class FooterComponent {
 
-  Future _loaded;
-  Http _http;
-  String version;
-  final versionUri = "/packages/timecard_client/component/version";
+  String get version => _version_service.version;
+  VersionService _version_service;
   final year = new DateFormat("y").format(new DateTime.now());
 
-  FooterComponent(this._http) {
-    var load = _get_version();
-    if (load != null) {
-      _loaded = Future.wait([load]);
-    }
-  }
-
-  Future _get_version() {
-    return _http.get(versionUri).then((response) {
-      version = response.data;
-    });
-  }
+  FooterComponent(this._version_service);
 
 }
 

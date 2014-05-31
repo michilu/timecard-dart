@@ -27,6 +27,7 @@ part "component/footer.dart";
 part "component/nav.dart";
 part "component/remember_me.dart";
 part "routing/timecard_router.dart";
+part "service/version.dart";
 
 @Controller(
     selector: "[app]",
@@ -110,6 +111,7 @@ class TimecardModule extends Module {
     install(new FooterModule());
     install(new NavModule());
     install(new RememberMeModule());
+    install(new VersionServiceModule());
 
     type(TimecardController);
     value(RouteInitializerFn, timecardRouteInitializer);
