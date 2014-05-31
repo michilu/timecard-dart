@@ -1,4 +1,10 @@
-library google_cloud_endpoints_api_service;
+library timecard_client.google_cloud_endpoints_api_service;
+
+// Temporary, please follow https://github.com/angular/angular.dart/issues/476
+@MirrorsUsed(
+  targets: const ["timecard_client.google_cloud_endpoints_api_service", "timecard_dev_api"],
+  override: "*")
+import "dart:mirrors";
 
 import "dart:async";
 import "dart:html";
@@ -9,12 +15,7 @@ import "package:google_oauth2_client/google_oauth2_browser.dart";
 import "package:timecard_dev_api/timecard_dev_api_browser.dart";
 import "package:timecard_dev_api/timecard_dev_api_client.dart";
 
-import "package:timecard_client/service/api_service.dart";
-
-@MirrorsUsed(
-  targets: const ["google_cloud_endpoints_api_service"],
-  override: "*")
-import "dart:mirrors";
+import "api_service.dart";
 
 class GoogleCloudEndpointModel extends Model {
   Future _loaded;

@@ -1,18 +1,33 @@
-library timecard_controller;
+library timecard_client;
+
+// Temporary, please follow https://github.com/angular/angular.dart/issues/476
+@MirrorsUsed(
+  targets: const ["timecard_client"],
+  override: "*")
+import "dart:mirrors";
 
 import "dart:async";
+import "dart:convert";
 import "dart:html";
+import "dart:js";
 
 import "package:angular/angular.dart";
 import "package:angular/routing/module.dart";
-
-import "package:timecard_client/component/edit_user.dart";
-import "package:timecard_client/component/feedback.dart";
-import "package:timecard_client/component/footer.dart";
-import "package:timecard_client/component/nav.dart";
-import "package:timecard_client/component/remember_me.dart";
-import "package:timecard_client/routing/timecard_router.dart";
+import "package:angular_ui/modal/modal.dart";
+import "package:chrome/chrome_app.dart" as chrome;
 import "package:timecard_client/service/api_service.dart";
+import "package:timecard_client/service/google_cloud_endpoints_api_service.dart";
+import 'package:intl/intl.dart';
+
+export "package:timecard_client/service/google_cloud_endpoints_api_service.dart" show GoogleCloudEndpointModule, GoogleCloudEndpointServiceConfig;
+
+part "component/edit_user.dart";
+part "component/feedback.dart";
+part "component/footer.dart";
+part "component/nav.dart";
+part "component/remember_me.dart";
+part "routing/timecard_router.dart";
+part "service/version.dart";
 
 @Controller(
     selector: "[app]",
@@ -95,6 +110,7 @@ class TimecardModule extends Module {
     install(new FooterModule());
     install(new NavModule());
     install(new RememberMeModule());
+    install(new VersionServiceModule());
 
     type(TimecardController);
     value(RouteInitializerFn, timecardRouteInitializer);

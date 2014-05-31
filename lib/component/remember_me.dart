@@ -1,17 +1,4 @@
-library remember_me;
-
-import "dart:async";
-import "dart:convert";
-import "dart:html";
-import "dart:js";
-
-import "package:angular/angular.dart";
-import "package:chrome/chrome_app.dart" as chrome;
-
-@MirrorsUsed(
-  targets: const ["remember_me"],
-  override: "*")
-import "dart:mirrors";
+part of timecard_client;
 
 class localStorage {
 

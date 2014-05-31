@@ -1,9 +1,4 @@
-library feedback;
-
-import "dart:html";
-
-import "package:angular/angular.dart";
-import "package:angular_ui/modal/modal.dart";
+part of timecard_client;
 
 class FeedbackFormConfig {
   String formkey;

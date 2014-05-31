@@ -32,7 +32,7 @@ MINCSS=$(SASS:.sass=.min.css)
 YAML=$(shell find web -type f -name "[^.]*.yaml")
 JSON=$(YAML:.yaml=.json)
 RESOURCE=$(HTML) $(CSS) $(MINCSS) $(JSON)
-VERSION_HTML=lib/component/version
+VERSION_HTML=lib/version
 
 resource: $(RESOURCE) $(VERSION_HTML)
 
@@ -116,7 +116,7 @@ $(RELEASE_DIR)/%: %
 
 DART=$(foreach dir,$(RESOURCE_DIR),$(wildcard $(dir)/*.dart))
 $(DART_JS): pubspec.yaml $(DART)
-	pub build --mode=debug
+	pub build
 
 $(RELEASE_CHROME_APPS_RESOURCE_DIR): $(foreach path,$(RELEASE_RESOURCE_DIR),$(addprefix $(RELEASE_RESOURCE_SRC_DIR)/,$(path)))
 	cp -r $(subst $(RELEASE_CHROME_APPS),$(RELEASE_RESOURCE_SRC_DIR),$@) $@

@@ -2,7 +2,7 @@
 .sass-cache
 Gemfile.lock
 build
-lib/component/version
+lib/version
 packages
 pubspec.lock
 pubspec.yaml.rej
