@@ -32,7 +32,7 @@ MINCSS=$(SASS:.sass=.min.css)
 YAML=$(shell find web -type f -name "[^.]*.yaml")
 JSON=$(YAML:.yaml=.json)
 RESOURCE=$(HTML) $(CSS) $(MINCSS) $(JSON)
-VERSION_HTML=lib/component/version
+VERSION_HTML=lib/version
 
 resource: $(RESOURCE) $(VERSION_HTML)
 

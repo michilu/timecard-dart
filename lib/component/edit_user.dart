@@ -1,13 +1,4 @@
-library edit_user;
-
-import "dart:async";
-
-import "package:angular/angular.dart";
-
-@MirrorsUsed(
-  targets: const ["edit_user"],
-  override: "*")
-import "dart:mirrors";
+part of timecard_client;
 
 @Component(
   selector: "edit_user-component",
