@@ -1,6 +1,4 @@
-library nav;
-
-import "package:angular/angular.dart";
+part of timecard_client;
 
 @Component(
   selector: "nav-component",

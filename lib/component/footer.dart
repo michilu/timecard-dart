@@ -1,10 +1,4 @@
-library footer;
-
-import "dart:async";
-import "dart:html";
-
-import "package:angular/angular.dart";
-import 'package:intl/intl.dart';
+part of timecard_client;
 
 @Component(
   selector: "footer-component",
