@@ -115,7 +115,7 @@ $(RELEASE_DIR)/%: %
 
 DART=$(foreach dir,$(RESOURCE_DIR),$(wildcard $(dir)/*.dart))
 $(DART_JS): pubspec.yaml $(DART)
-	pub build --mode=debug
+	pub build
 
 $(RELEASE_CHROME_APPS_RESOURCE_DIR): $(foreach path,$(RELEASE_RESOURCE_DIR),$(addprefix $(RELEASE_RESOURCE_SRC_DIR)/,$(path)))
 	cp -r $(subst $(RELEASE_CHROME_APPS),$(RELEASE_RESOURCE_SRC_DIR),$@) $@
