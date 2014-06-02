@@ -184,8 +184,7 @@ clean:
 	-patch -p1 --forward --reverse -i pubbuild.patch
 
 clean-all: clean
-	rm -f pubspec.lock
-	rm -f pubspec.yaml.rej
+	rm -f pubspec.lock pubspec.yaml.orig pubspec.yaml.rej
 	rm -rf $(ENDPOINTS_LIB) packages
 	find . -name "*.sw?" -delete
 	find . -name .DS_Store -delete

@@ -5,6 +5,7 @@ build
 lib/version
 packages
 pubspec.lock
+pubspec.yaml.orig
 pubspec.yaml.rej
 release
 submodule/dart_timecard_dev_api_client
