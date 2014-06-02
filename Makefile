@@ -45,7 +45,7 @@ pubserve-force-poll: $(VERSION_HTML) $(ENDPOINTS_LIB) $(RESOURCE)
 	-patch -p1 --forward --reverse -i pubbuild.patch
 	pub serve --port 8080 --no-dart2js --force-poll
 
-DISCOVERY=timecard-dev.discovery
+DISCOVERY=echo-v1.discovery
 $(ENDPOINTS_LIB):
 	cd submodule/discovery_api_dart_client_generator; pub install
 	submodule/discovery_api_dart_client_generator/bin/generate.dart --no-prefix -i $(DISCOVERY) -o submodule
