@@ -60,6 +60,27 @@ Open project for iOS with Xcode
 
     $ make xcode
 
+How to access to your Google Cloud Endpoints API
+------------------------------------------------
+
+Get the discovery file of your Google Cloud Endpoints API:
+
+    $ curl -o <your-api>.discovery https://<your-app-id>.appspot.com/_ah/api/discovery/v1/apis/<your-api>/<your-api-version>/rest
+
+Then, Rewrite `DISCOVERY` and `ENDPOINTS_LIB` line in Makefile:
+
+    DISCOVERY=echo-v1.discovery
+
+    ENDPOINTS_LIB=submodule/dart_echo_v1_api_client
+
+to
+
+    DISCOVERY=<your-api>.discovery
+
+    ENDPOINTS_LIB=submodule/dart_<your-api>_api_client
+
+see: https://github.com/dart-lang/discovery_api_dart_client_generator#generate-your-client-library
+
 Dependencies
 ------------
 
