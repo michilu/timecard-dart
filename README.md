@@ -1,5 +1,5 @@
 dart-cca-example
-=============
+================
 
 An example of Cordova Chrome Apps written in AngularDart.
 
@@ -63,8 +63,9 @@ Open project for iOS with Xcode
 Dependencies
 ------------
 
+* Mac OS X
+* GNU Make (https://developer.apple.com/downloads/index.action)
 * Bundler
-* GNU Make
 * Node.js v0.10+ (dependenced by cordova)
   * npm@1.4.5+
   * ios-deploy@1.0.6
