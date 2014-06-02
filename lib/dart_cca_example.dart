@@ -23,18 +23,18 @@ export "package:dart_cca_example/service/google_cloud_endpoints_api_service.dart
 part "component/edit_user.dart";
 part "component/feedback.dart";
 part "component/footer.dart";
-part "routing/timecard_router.dart";
+part "routing/router.dart";
 part "service/version.dart";
 
 @Controller(
     selector: "[app]",
     publishAs: "a")
-class TimecardController {
+class DartCCAController {
 
   APIService _api;
   dynamic get model => _api.model;
 
-  TimecardController(this._api);
+  DartCCAController(this._api);
 
   bool loading() {
     return _api.loading();
@@ -64,16 +64,16 @@ class TimecardController {
 
 }
 
-class TimecardModule extends Module {
-  TimecardModule() {
+class DartCCAModule extends Module {
+  DartCCAModule() {
 
     install(new EditUserModule());
     install(new FeedbackModule());
     install(new FooterModule());
     install(new VersionServiceModule());
 
-    type(TimecardController);
-    value(RouteInitializerFn, timecardRouteInitializer);
+    type(DartCCAController);
+    value(RouteInitializerFn, routeInitializer);
     factory(NgRoutingUsePushState,
         (_) => new NgRoutingUsePushState.value(false));
   }

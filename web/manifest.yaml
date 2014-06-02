@@ -1,5 +1,5 @@
 manifest_version: 2
-name: Timecard
+name: DartCCA
 version: "1"
 minimum_chrome_version: "23"
 icons:

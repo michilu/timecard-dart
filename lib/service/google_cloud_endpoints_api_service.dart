@@ -93,7 +93,7 @@ class GoogleCloudEndpointService extends APIService {
 
   GoogleCloudEndpointServiceConfig c;
   Http _http;
-  Timecard _endpoint;
+  Echo _endpoint;
 
   dynamic get comment   => _endpoint.comment ;
   dynamic get issue     => _endpoint.issue   ;
@@ -119,7 +119,7 @@ class GoogleCloudEndpointService extends APIService {
   }
 
   void _postLogin(auth) {
-    _endpoint = new Timecard(auth);
+    _endpoint = new Echo(auth);
     _endpoint.rootUrl = c.root_url;
     _endpoint.makeAuthRequests = true;
     model = new GoogleCloudEndpointModel(this);

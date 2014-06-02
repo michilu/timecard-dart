@@ -59,7 +59,7 @@ $(VERSION_HTML):
 
 
 RELEASE_RESOURCE=\
-	$(foreach path,$(HTML) $(VERSION_HTML),$(subst lib,web/packages/timecard_client,$(path)))\
+	$(foreach path,$(HTML) $(VERSION_HTML),$(subst lib,web/packages/dart_cca_example,$(path)))\
 	$(JSON)\
 	$(shell find web/icons -name "*.png")\
 	web/js/browser_dart_csp_safe.js\
@@ -130,7 +130,7 @@ ios-sim: $(RELEASE_IOS)
 
 
 RESOURCE_SUFFIX_FOR_BUILD = html css json js
-RESOURCE_DIR_FOR_BUILD = web web/js web/view web/packages/timecard_client/component web/packages/timecard_client/routing web/packages/timecard_client/service
+RESOURCE_DIR_FOR_BUILD = web web/js web/view web/packages/dart_cca_example/component web/packages/dart_cca_example/routing web/packages/dart_cca_example/service
 RESOURCE_FOR_BUILD = $(foreach suffix,$(RESOURCE_SUFFIX_FOR_BUILD),$(foreach dir,$(RESOURCE_DIR_FOR_BUILD),$(wildcard $(dir)/*.$(suffix))))
 BUILD_RESOURCE = $(addprefix build/,$(RESOURCE_FOR_BUILD))
 RELEASE_CORDOVA=$(RELEASE_DIR)/cordova
@@ -174,7 +174,7 @@ $(RELEASE_CORDOVA_RESOURCE_DIR): $(foreach path,$(RELEASE_RESOURCE_DIR),$(addpre
 
 
 xcode: $(RELEASE_IOS)
-	open $</platforms/ios/Timecard.xcodeproj
+	open $</platforms/ios/DartCCA.xcodeproj
 
 
 clean:

@@ -1,6 +1,6 @@
 part of dart_cca_example;
 
-void timecardRouteInitializer(Router router, ViewFactory views) =>
+void routeInitializer(Router router, ViewFactory views) =>
     views.configure({
       "signup": ngRoute(
         path: "/signup",
