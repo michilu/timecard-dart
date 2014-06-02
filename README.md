@@ -65,17 +65,17 @@ How to access to your Google Cloud Endpoints API
 
 Get the discovery file of your Google Cloud Endpoints API:
 
-    $ curl -o <your-api>.discovery https://<your-app-id>.appspot.com/_ah/api/discovery/v1/apis/<your-api>/<your-api-version>/rest
+    $ curl -o assets/<your-api>.discovery https://<your-app-id>.appspot.com/_ah/api/discovery/v1/apis/<your-api>/<your-api-version>/rest
 
 Then, Rewrite `DISCOVERY` and `ENDPOINTS_LIB` line in Makefile:
 
-    DISCOVERY=echo-v1.discovery
+    DISCOVERY=assets/echo-v1.discovery
 
     ENDPOINTS_LIB=submodule/dart_echo_v1_api_client
 
 to
 
-    DISCOVERY=<your-api>.discovery
+    DISCOVERY=assets/<your-api>.discovery
 
     ENDPOINTS_LIB=submodule/dart_<your-api>_api_client
 
