@@ -5,6 +5,7 @@ build
 lib/version
 packages
 pubspec.lock
+pubspec.yaml.orig
 pubspec.yaml.rej
 release
 submodule/dart_echo_v1_api_client
