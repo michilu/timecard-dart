@@ -6,7 +6,7 @@ dependencies:
   chrome: any
   js: any
   shadow_dom: any
-  timecard_dev_api:
-    path: submodule/dart_timecard_dev_api_client
+  echo_v1_api:
+    path: submodule/dart_echo_v1_api_client
 dev_dependencies:
   unittest: any

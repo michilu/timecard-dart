@@ -7,7 +7,7 @@ packages
 pubspec.lock
 pubspec.yaml.rej
 release
-submodule/dart_timecard_dev_api_client
+submodule/dart_echo_v1_api_client
 tags
 
 syntax: glob

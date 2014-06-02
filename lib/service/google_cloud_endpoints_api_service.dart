@@ -2,7 +2,7 @@ library dart_cca_example.google_cloud_endpoints_api_service;
 
 // Temporary, please follow https://github.com/angular/angular.dart/issues/476
 @MirrorsUsed(
-  targets: const ["dart_cca_example.google_cloud_endpoints_api_service", "timecard_dev_api"],
+  targets: const ["dart_cca_example.google_cloud_endpoints_api_service", "echo_v1_api"],
   override: "*")
 import "dart:mirrors";
 
@@ -12,8 +12,8 @@ import "dart:html";
 import "package:angular/angular.dart";
 import "package:chrome/chrome_app.dart" as chrome;
 import "package:google_oauth2_client/google_oauth2_browser.dart";
-import "package:timecard_dev_api/timecard_dev_api_browser.dart";
-import "package:timecard_dev_api/timecard_dev_api_client.dart";
+import "package:echo_v1_api/echo_v1_api_browser.dart";
+import "package:echo_v1_api/echo_v1_api_client.dart";
 
 import "api_service.dart";
 

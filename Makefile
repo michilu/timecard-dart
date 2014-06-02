@@ -21,7 +21,7 @@ RELEASE_IOS=$(RELEASE_DIR)/ios
 all: chrome-apps $(RELEASE_IOS)
 
 
-ENDPOINTS_LIB=submodule/dart_timecard_dev_api_client
+ENDPOINTS_LIB=submodule/dart_echo_v1_api_client
 RESOURCE_DIR_PATH=web lib
 RESOURCE_DIR=$(foreach dir,$(shell find $(RESOURCE_DIR_PATH) -type d),$(dir))
 HAML=$(foreach dir,$(RESOURCE_DIR),$(wildcard $(dir)/*.haml))
