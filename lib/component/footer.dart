@@ -1,8 +1,8 @@
-part of timecard_client;
+part of dart_cca_example;
 
 @Component(
   selector: "footer-component",
-  templateUrl: "packages/timecard_client/component/footer.html",
+  templateUrl: "packages/dart_cca_example/component/footer.html",
   applyAuthorStyles: true,
   publishAs: "c"
 )

@@ -1,8 +1,8 @@
-part of timecard_client;
+part of dart_cca_example;
 
 @Component(
   selector: "edit_user-component",
-  templateUrl: "packages/timecard_client/component/edit_user.html",
+  templateUrl: "packages/dart_cca_example/component/edit_user.html",
   applyAuthorStyles: true,
   publishAs: "c"
 )

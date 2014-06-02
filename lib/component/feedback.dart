@@ -1,4 +1,4 @@
-part of timecard_client;
+part of dart_cca_example;
 
 class FeedbackFormConfig {
   String formkey;
@@ -6,7 +6,7 @@ class FeedbackFormConfig {
 
 @Component(
   selector: "feedback-component",
-  templateUrl: "packages/timecard_client/component/feedback_link.html",
+  templateUrl: "packages/dart_cca_example/component/feedback_link.html",
   applyAuthorStyles: true,
   publishAs: "c"
 )
@@ -16,8 +16,6 @@ class FeedbackComponent {
 
   FeedbackFormConfig _config;
   Http _http;
-  Modal modal;
-  ModalInstance modalInstance;
   Scope scope;
   String description;
   String get version => p.version;
@@ -26,22 +24,7 @@ class FeedbackComponent {
     return "https://docs.google.com/spreadsheet/formResponse?formkey=${_config.formkey}";
   }
 
-  FeedbackComponent(this._config, this._http, this.modal, this.scope);
-
-  void open(String templateUrl) {
-    modalInstance = modal.open(new ModalOptions(templateUrl:templateUrl), scope);
-
-    modalInstance.result
-      ..then((value) {
-        print('Closed with selection $value');
-      }, onError:(e) {
-        print('Dismissed with $e');
-      });
-  }
-
-  void ok(event) {
-    modalInstance.close(event);
-  }
+  FeedbackComponent(this._config, this._http, this.scope);
 
   void submit(event) {
     String data = new Uri.http(""/*authority*/, ""/*unencodedPath*/, {/*queryParameters*/
@@ -60,7 +43,6 @@ class FeedbackComponent {
 
 class FeedbackModule extends Module {
   FeedbackModule() {
-    install(new ModalModule());
     type(FeedbackComponent);
   }
 }

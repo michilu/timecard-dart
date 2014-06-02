@@ -1,8 +1,8 @@
-library timecard_client.google_cloud_endpoints_api_service;
+library dart_cca_example.google_cloud_endpoints_api_service;
 
 // Temporary, please follow https://github.com/angular/angular.dart/issues/476
 @MirrorsUsed(
-  targets: const ["timecard_client.google_cloud_endpoints_api_service", "timecard_dev_api"],
+  targets: const ["dart_cca_example.google_cloud_endpoints_api_service", "timecard_dev_api"],
   override: "*")
 import "dart:mirrors";
 

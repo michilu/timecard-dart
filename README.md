@@ -1,15 +1,15 @@
-timecard-dart
+dart-cca-example
 =============
 
-Timecard - Time tracking for your project.
+An example of Cordova Chrome Apps written in AngularDart.
 
 Set up
 ------
 
 First, checkout this repository:
 
-    $ git clone https://github.com/MiCHiLU/timecard-dart.git
-    $ cd timecard-dart
+    $ git clone https://github.com/MiCHiLU/dart-cca-example.git
+    $ cd dart-cca-example
     $ bundle install
 
 Then, install cca (Cordova Chrome Apps):
@@ -23,8 +23,8 @@ Then, install cca (Cordova Chrome Apps):
 
 Optional, if you use watchlion:
 
-    $ mkvirtualenv timecard-dart
-    (timecard-dart)$ pip install -r packages.txt
+    $ mkvirtualenv dart-cca-example
+    (dart-cca-example)$ pip install -r packages.txt
 
 Build and Test
 --------------

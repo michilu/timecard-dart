@@ -1,4 +1,4 @@
-part of timecard_client;
+part of dart_cca_example;
 
 void timecardRouteInitializer(Router router, ViewFactory views) =>
     views.configure({

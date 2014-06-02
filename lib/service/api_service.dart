@@ -1,8 +1,8 @@
-library timecard_client.api_service;
+library dart_cca_example.api_service;
 
 // Temporary, please follow https://github.com/angular/angular.dart/issues/476
 @MirrorsUsed(
-  targets: const ["timecard_client.api_service"],
+  targets: const ["dart_cca_example.api_service"],
   override: "*")
 import "dart:mirrors";
 

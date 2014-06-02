@@ -10,7 +10,7 @@ import "package:angular/angular.dart";
 import "package:angular/application_factory.dart";
 import "package:di/di.dart";
 import "package:logging/logging.dart";
-import "package:timecard_client/timecard.dart";
+import "package:dart_cca_example/timecard.dart";
 
 class MyAppModule extends Module {
   MyAppModule() {

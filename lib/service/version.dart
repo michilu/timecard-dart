@@ -1,11 +1,11 @@
-part of timecard_client;
+part of dart_cca_example;
 
 class VersionService {
 
   Future _loaded;
   Http _http;
   String version;
-  final _versionUri = "/packages/timecard_client/version";
+  final _versionUri = "/packages/dart_cca_example/version";
 
   VersionService(this._http) {
     var load = _get_version();
