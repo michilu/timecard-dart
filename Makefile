@@ -128,6 +128,9 @@ ios: $(RELEASE_IOS)
 ios-sim: $(RELEASE_IOS)
 	cd $<; cca emulate ios
 
+build: $(RELEASE_IOS)
+	cd $<; cca build ios
+
 
 RESOURCE_SUFFIX_FOR_BUILD = html css json js
 RESOURCE_DIR_FOR_BUILD = web web/js web/view web/packages/timecard_client/component web/packages/timecard_client/routing web/packages/timecard_client/service
@@ -191,4 +194,4 @@ clean-all: clean
 	find . -name packages -type l -delete
 	find . -type d -name .sass-cache |xargs rm -rf
 
-.PHONY: $(VERSION_HTML) $(RELEASE_IOS)
+.PHONY: $(VERSION_HTML) $(RELEASE_IOS) build

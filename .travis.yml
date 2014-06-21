@@ -1,0 +1,10 @@
+language: objective-c
+install:
+  - bundle install
+  - npm install
+  - nvm install 0.10
+  - nvm use 0.10
+  - npm install -g ios-deploy
+  - npm install -g ios-sim
+  - npm install -g cca
+script: make build
