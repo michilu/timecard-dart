@@ -11,6 +11,7 @@ First, checkout this repository:
     $ git clone https://github.com/MiCHiLU/timecard-dart.git
     $ cd timecard-dart
     $ bundle install
+    $ npm install
 
 Then, install cca (Cordova Chrome Apps):
 
