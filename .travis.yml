@@ -1,9 +1,4 @@
 language: objective-c
-before_install:
-  - wget -O /tmp/dartsdk.zip http://storage.googleapis.com/dart-archive/channels/stable/release/latest/sdk/dartsdk-linux-x64-release.zip
-  - unzip /tmp/dartsdk.zip /tmp
-  - export DART_SDK=/tmp/dart-sdk
-  - export PATH=$DART_SDK/bin:$PATH
 install:
   - bundle install
   - npm --version
@@ -11,4 +6,8 @@ install:
   - npm install -g ios-deploy
   - npm install -g ios-sim
   - npm install -g cca
+  - wget -O /tmp/dartsdk.zip http://storage.googleapis.com/dart-archive/channels/stable/release/latest/sdk/dartsdk-linux-x64-release.zip
+  - unzip /tmp/dartsdk.zip /tmp
+  - export DART_SDK=/tmp/dart-sdk
+  - export PATH=$DART_SDK/bin:$PATH
 script: make build
