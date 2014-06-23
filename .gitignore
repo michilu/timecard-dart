@@ -3,8 +3,11 @@
 Gemfile.lock
 build
 lib/version
+node_modules
+npm-debug.log
 packages
 pubspec.lock
+pubspec.yaml.orig
 pubspec.yaml.rej
 release
 submodule/dart_timecard_dev_api_client

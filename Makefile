@@ -13,7 +13,7 @@
 
 .SUFFIXES: .yaml .json
 .yaml.json:
-	cat $< |python -c "import json,yaml,sys; print(json.dumps(yaml.load(sys.stdin.read()), indent=2))" > $@
+	node_modules/.bin/yaml2json $< > $@
 
 
 RELEASE_DIR=release
@@ -45,9 +45,10 @@ pubserve-force-poll: $(VERSION_HTML) $(ENDPOINTS_LIB) $(RESOURCE)
 	-patch -p1 --forward --reverse -i pubbuild.patch
 	pub serve --port 8080 --no-dart2js --force-poll
 
+DISCOVERY=assets/timecard-dev.discovery
 $(ENDPOINTS_LIB):
 	cd submodule/discovery_api_dart_client_generator; pub install
-	submodule/discovery_api_dart_client_generator/bin/generate.dart --no-prefix -i timecard-dev.discovery -o submodule
+	submodule/discovery_api_dart_client_generator/bin/generate.dart --no-prefix -i $(DISCOVERY) -o submodule
 
 VERSION=$(shell git describe --always --dirty=+)
 $(VERSION_HTML):
@@ -187,8 +188,7 @@ clean:
 	-patch -p1 --forward --reverse -i pubbuild.patch
 
 clean-all: clean
-	rm -f pubspec.lock
-	rm -f pubspec.yaml.rej
+	rm -f pubspec.lock pubspec.yaml.orig pubspec.yaml.rej
 	rm -rf $(ENDPOINTS_LIB) packages
 	find . -name "*.sw?" -delete
 	find . -name .DS_Store -delete
