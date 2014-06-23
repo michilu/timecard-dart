@@ -7,7 +7,7 @@ install:
   - npm install -g ios-sim
   - npm install -g cca
   - wget -O /tmp/dartsdk.zip http://storage.googleapis.com/dart-archive/channels/stable/release/latest/sdk/dartsdk-linux-x64-release.zip
-  - unzip /tmp/dartsdk.zip /tmp
+  - unzip /tmp/dartsdk.zip -d /tmp
   - export DART_SDK=/tmp/dart-sdk
   - export PATH=$DART_SDK/bin:$PATH
 script: make build
