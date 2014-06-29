@@ -13,7 +13,6 @@ import "dart:js";
 
 import "package:angular/angular.dart";
 import "package:angular/routing/module.dart";
-import "package:angular_ui/modal/modal.dart";
 import "package:chrome/chrome_app.dart" as chrome;
 import "package:timecard_client/service/api_service.dart";
 import "package:timecard_client/service/google_cloud_endpoints_api_service.dart";

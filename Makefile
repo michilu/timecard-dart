@@ -66,7 +66,6 @@ RELEASE_RESOURCE=\
 	web/js/browser_dart_csp_safe.js\
 	web/js/main.js\
 	web/main.dart\
-	web/packages/angular_ui/modal/window.html\
 	web/packages/browser/dart.js\
 	web/packages/chrome/bootstrap.js\
 	web/packages/shadow_dom/shadow_dom.min.js\
